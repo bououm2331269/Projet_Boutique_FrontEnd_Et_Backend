@@ -1,0 +1,636 @@
+{
+  "produits": [
+    {
+      "id": "1",
+      "nom": "iPhone 14",
+      "description": "Smartphone Apple avec écran Super Retina XDR et puce A15 Bionic.",
+      "image": "https://cdn.pixabay.com/photo/2022/09/25/22/25/iphones-7479304_1280.jpg",
+      "quantiteStock": 5,
+      "categorieProduitId": 1,
+      "prix": 999
+    },
+    {
+      "id": "2",
+      "nom": "Samsung Galaxy S23",
+      "description": "Smartphone haut de gamme avec triple capteur photo et écran AMOLED.",
+      "image": "https://cdn.pixabay.com/photo/2019/12/27/01/46/samsung-4721542_1280.jpg",
+      "quantiteStock": 8,
+      "categorieProduitId": 1,
+      "prix": 899
+    },
+    {
+      "id": "3",
+      "nom": "MacBook Air M2",
+      "description": "Ordinateur portable Apple ultrafin avec puce M2.",
+      "image": "https://cdn.pixabay.com/photo/2015/09/26/10/24/macbook-958885_1280.jpg",
+      "quantiteStock": 5,
+      "categorieProduitId": 2,
+      "prix": 1299
+    },
+    {
+      "id": "4",
+      "nom": "Dell XPS 13",
+      "description": "Laptop compact avec écran InfinityEdge et processeur Intel i7.",
+      "image": "https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/xps-notebooks/9345/media-gallery/touch/silver/notebook-xps-13-9345-t-silver-gallery-2.psd?fmt:png-alpha&pscan:auto&scl:1&wid:3988&hei:2361&qlt:100,1&resMode:sharp2&size:3988,2361&chrss:full&imwidth:5000",
+      "quantiteStock": 4,
+      "categorieProduitId": 2,
+      "prix": 1150
+    },
+    {
+      "id": "5",
+      "nom": "iPad Pro 12.9\"",
+      "description": "Tablette Apple avec puce M2, idéale pour la création et le travail.",
+      "image": "https://cdn.pixabay.com/photo/2019/10/15/01/11/ipad-4550306_1280.jpg",
+      "quantiteStock": 6,
+      "categorieProduitId": 3,
+      "prix": 1099
+    },
+    {
+      "id": "6",
+      "nom": "Sony WH-1000XM5",
+      "description": "Casque sans fil à réduction de bruit active haut de gamme.",
+      "image": "https://cdn.pixabay.com/photo/2022/10/06/21/49/headphones-7503631_1280.jpg",
+      "quantiteStock": 10,
+      "categorieProduitId": 5,
+      "prix": 399
+    },
+    {
+      "id": "7",
+      "nom": "PlayStation 5",
+      "description": "Console de jeux Sony nouvelle génération avec performances élevées.",
+      "image": "https://i.jeuxactus.com/datas/accessoires/p/s/ps5/xl/ps5-artwork-646f0fb8cc010.jpg",
+      "quantiteStock": 2,
+      "categorieProduitId": 7,
+      "prix": 599
+    },
+    {
+      "id": "8",
+      "nom": "Nikon Z6 II",
+      "description": "Appareil photo hybride plein format pour amateurs éclairés et pros.",
+      "image": "https://cdn.pixabay.com/photo/2022/09/07/18/48/camera-7439376_1280.jpg",
+      "quantiteStock": 1,
+      "categorieProduitId": 6,
+      "prix": 1999
+    },
+    {
+      "id": "9",
+      "nom": "Logitech MX Master 3S",
+      "description": "Souris ergonomique avancée pour les professionnels.",
+      "image": "https://cdn.pixabay.com/photo/2012/03/01/01/33/mouse-20223_1280.jpg",
+      "quantiteStock": 12,
+      "categorieProduitId": 9,
+      "prix": 129
+    },
+    {
+      "id": "10",
+      "nom": "NVIDIA GeForce RTX 4080",
+      "description": "Carte graphique puissante pour le gaming et la création 3D.",
+      "image": "https://cdn.pixabay.com/photo/2020/06/06/01/21/nvidia-5264921_1280.jpg",
+      "quantiteStock": 3,
+      "categorieProduitId": 10,
+      "prix": 1399
+    },
+    {
+      "id": "11",
+      "nom": "MacBook Pro 16",
+      "description": "Ordinateur portable avec puce M2 Pro.",
+      "image": "https://cdn.pixabay.com/photo/2016/11/21/16/27/laptop-1846277_1280.jpg",
+      "quantiteStock": 5,
+      "categorieProduitId": 2,
+      "prix": 2499
+    },
+    {
+      "id": "12",
+      "nom": "Dell XPS 10",
+      "description": "Ultrabook compact et puissant.",
+      "image": "https://cdn.pixabay.com/photo/2020/03/19/15/34/laptop-4947809_1280.jpg",
+      "quantiteStock": 10,
+      "categorieProduitId": 2,
+      "prix": 1399
+    },
+    {
+      "id": "13",
+      "nom": "HP Spectre x360",
+      "description": "Laptop convertible avec écran tactile.",
+      "image": "https://cdn.pixabay.com/photo/2018/10/02/09/52/hp-hq-tre-core-i5-laptop-3718328_1280.jpg",
+      "quantiteStock": 7,
+      "categorieProduitId": 2,
+      "prix": 1599
+    },
+    {
+      "id": "14",
+      "nom": "Lenovo ThinkPad X1 Carbon",
+      "description": "Ordinateur portable pour professionnels.",
+      "image": "https://cdn.pixabay.com/photo/2016/04/17/17/43/lenovo-thinkpad-x61-tablet-1335138_1280.jpg",
+      "quantiteStock": 6,
+      "categorieProduitId": 2,
+      "prix": 1799
+    },
+    {
+      "id": "15",
+      "nom": "Asus ROG Zephyrus G14",
+      "description": "Laptop gamer compact et puissant.",
+      "image": "https://cdn.pixabay.com/photo/2021/09/04/14/30/laptop-6597992_1280.jpg",
+      "quantiteStock": 8,
+      "categorieProduitId": 2,
+      "prix": 1499
+    },
+    {
+      "id": "16",
+      "nom": "LG OLED C2",
+      "description": "Téléviseur OLED 4K de haute qualité.",
+      "image": "https://www.lg.com/content/dam/channel/wcms/ca_fr/images/tvs/oled42c2pua_acc_enci_ca_fr_c/gallery/DZ-01.jpg",
+      "quantiteStock": 4,
+      "categorieProduitId": 4,
+      "prix": 1799
+    },
+    {
+      "id": "17",
+      "nom": "Samsung QN90A",
+      "description": "Téléviseur Neo QLED avec technologie avancée.",
+      "image": "https://images.samsung.com/is/image/samsung/p6pim/ca_fr/qn43qn90aafxzc/gallery/ca-fr-neo-qled-qn90a-377536-qn43qn90aafxzc-530334072?$684_547_PNG$",
+      "quantiteStock": 6,
+      "categorieProduitId": 4,
+      "prix": 1599
+    },
+    {
+      "id": "18",
+      "nom": "Sony WH-1000XM5",
+      "description": "Casque à réduction de bruit de qualité supérieure.",
+      "image": "https://cdn.pixabay.com/photo/2017/04/04/17/25/sony-2202301_640.jpg",
+      "quantiteStock": 15,
+      "categorieProduitId": 5,
+      "prix": 399
+    },
+    {
+      "id": "19",
+      "nom": "Bose QuietComfort 45",
+      "description": "Casque confortable avec un son clair.",
+      "image": "https://assets.bosecreative.com/transform/080f2b7a-7857-471c-a8fc-8dc5fa3ad3a6/QC45-LE_Left-Angle_1200x1022_Midnight-Blue_RGB?io:width:816,height:667,transform:fit&io:width:767,height:767,transform:fit",
+      "quantiteStock": 10,
+      "categorieProduitId": 5,
+      "prix": 329
+    },
+    {
+      "id": "20",
+      "nom": "Apple AirPods Max",
+      "description": "Casque premium avec spatial audio.",
+      "image": "https://www.apple.com/v/airpods-max/i/images/overview/bento/midnight/bento_1_airpod_max_midnight__4jy1tkqh9qay_small.jpg",
+      "quantiteStock": 8,
+      "categorieProduitId": 5,
+      "prix": 549
+    },
+    {
+      "id": "21",
+      "nom": "JBL Live 660NC",
+      "description": "Casque sans fil avec son immersif.",
+      "image": "https://ca.jbl.com/dw/image/v2/AAUJ_PRD/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw2bf6b1e1/JBL_LIVE_660NC_Product_Image_Hero_Black.png?sw:537&sfrm:png",
+      "quantiteStock": 12,
+      "categorieProduitId": 5,
+      "prix": 199
+    },
+    {
+      "id": "22",
+      "nom": "Canon EOS R6",
+      "description": "Appareil photo plein format pour photographes exigeants.",
+      "image": "https://cdn.pixabay.com/photo/2019/12/02/02/23/canon-system-camera-4666773_640.jpg",
+      "quantiteStock": 5,
+      "categorieProduitId": 6,
+      "prix": 2499
+    },
+    {
+      "id": "23",
+      "nom": "Nikon Z7 II",
+      "description": "Appareil photo sans miroir haute résolution.",
+      "image": "https://cdn.pixabay.com/photo/2022/09/07/18/49/fullframe-7439383_640.jpg",
+      "quantiteStock": 4,
+      "categorieProduitId": 6,
+      "prix": 2999
+    },
+    {
+      "id": "24",
+      "nom": "Sony Alpha a7 IV",
+      "description": "Hybride polyvalent pour vidéo et photo.",
+      "image": "https://cdn.pixabay.com/photo/2022/10/12/19/13/sony-a7-7517301_640.jpg",
+      "quantiteStock": 6,
+      "categorieProduitId": 6,
+      "prix": 2599
+    },
+    {
+      "id": "25",
+      "nom": "PlayStation 4",
+      "description": "Console de jeux nouvelle génération de Sony.",
+      "image": "https://cdn.pixabay.com/photo/2017/08/10/07/29/sony-2619483_1280.jpg",
+      "quantiteStock": 10,
+      "categorieProduitId": 7,
+      "prix": 499
+    },
+    {
+      "id": "26",
+      "nom": "Xbox Series X",
+      "description": "Console de jeux puissante avec Game Pass.",
+      "image": "https://cdn.pixabay.com/photo/2017/11/18/00/10/xbox-2958864_640.jpg",
+      "quantiteStock": 9,
+      "categorieProduitId": 7,
+      "prix": 499
+    },
+    {
+      "id": "27",
+      "nom": "Nintendo Switch OLED",
+      "description": "Console hybride avec écran OLED vibrant.",
+      "image": "https://cdn.pixabay.com/photo/2019/01/24/23/54/nintendo-switch-3953601_640.jpg",
+      "quantiteStock": 15,
+      "categorieProduitId": 7,
+      "prix": 349
+    },
+    {
+      "id": "28",
+      "nom": "Apple Watch Series 8",
+      "description": "Montre intelligente avec suivi santé avancé.",
+      "image": "https://multimedia.bbycastatic.ca/multimedia/products/150x150/165/16554/16554126.jpeg",
+      "quantiteStock": 20,
+      "categorieProduitId": 8,
+      "prix": 399
+    },
+    {
+      "id": "29",
+      "nom": "Samsung Galaxy Watch 5",
+      "description": "Montre Android avec longue autonomie.",
+      "image": "https://images.samsung.com/ca_fr/galaxy-watch5/feature/galaxy-watch5-kv-mo.jpg",
+      "quantiteStock": 15,
+      "categorieProduitId": 8,
+      "prix": 279
+    },
+    {
+      "id": "30",
+      "nom": "Garmin Forerunner 955",
+      "description": "Montre pour les sportifs et aventuriers.",
+      "image": "https://res.garmin.com/en/products/010-02638-10/g/46824-FR955-S1-F9.jpg",
+      "quantiteStock": 10,
+      "categorieProduitId": 8,
+      "prix": 499
+    },
+    {
+      "id": "31",
+      "nom": "Fitbit Sense 2",
+      "description": "Wearable pour le suivi de la santé.",
+      "image": "https://merchandising-assets.bestbuy.ca/bltc8653f66842bff7f/blt34d23ffe2e90887a/63002617509e321033a889bd/wt-20220824-feature-fg-fitbit-sense-2-xs.png?width:50p&quality:80&auto:webp",
+      "quantiteStock": 18,
+      "categorieProduitId": 8,
+      "prix": 249
+    },
+    {
+      "id": "32",
+      "nom": "Logitech StreamCam",
+      "description": "Webcam pour streaming en haute définition.",
+      "image": "https://resource.logitech.com/w_420,h_1024,c_limit,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/software/capture/capture-c920s-hd-pro-glamour-lg.png?v:1",
+      "quantiteStock": 12,
+      "categorieProduitId": 9,
+      "prix": 149
+    },
+    {
+      "id": "33",
+      "nom": "Intel Core i9-12900K",
+      "description": "Processeur haut de gamme pour les gamers et créateurs.",
+      "image": "https://i.pcmag.com/imagery/reviews/070BdprI2Ik2Ecd2wzo0Asi-8.fit_scale.size_1028x578.v1635954194.jpg",
+      "quantiteStock": 8,
+      "categorieProduitId": 10,
+      "prix": 599
+    },
+    {
+      "id": "34",
+      "nom": "AMD Ryzen 9 5950X",
+      "description": "Processeur puissant pour multitâche intensif.",
+      "image": "https://www.amd.com/content/dam/amd/en/images/products/processors/ryzen/2505503-ryzen-9-5900x.jpg",
+      "quantiteStock": 6,
+      "categorieProduitId": 10,
+      "prix": 799
+    },
+    {
+      "id": "35",
+      "nom": "Corsair Vengeance RGB Pro 32GB",
+      "description": "Kit de mémoire RAM rapide avec éclairage RGB.",
+      "image": "https://assets.corsair.com/image/upload/f_auto,q_auto/v1/akamai/pdp/vengeance-rgb-pro/Content/Vengeance_RGB_Pro_PDP_Black_01.png",
+      "quantiteStock": 10,
+      "categorieProduitId": 10,
+      "prix": 199
+    },
+    {
+      "id": "a55c",
+      "nom": "Samsung A51",
+      "description": "un téléphone de la marque Samsung",
+      "image": "https://i.ebayimg.com/images/g/f1EAAOSw8AdgXAnr/s-l1200.jpg",
+      "quantiteStock": "10",
+      "categorieProduitId": "1",
+      "prix": 500
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "nom": "Smartphones",
+      "image": "https://th.bing.com/th/id/R.66c19c31c4cc524f24fa9793cdf4804f?rik=Ka2OfcpLcAHVZQ&riu=http%3a%2f%2fgeogabon-shop.com%2fcdn%2fshop%2fcollections%2fcollection_smartphone.png%3fv%3d1600375858&ehk=EQyib5WsA0YYULNacf0g0VdesMQOAGO5Gcd99%2byDlmg%3d&risl=&pid=ImgRaw&r=0",
+      "description": "Téléphones mobiles intelligents avec fonctionnalités avancées."
+    },
+    {
+      "id": "2",
+      "nom": "Ordinateurs portables",
+      "image": "https://www.saint-malo.net/wp-content/uploads/meilleure-marque-ordinateur-portable.jpg.webp",
+      "description": "Laptops pour usage personnel ou professionnel."
+    },
+    {
+      "id": "3",
+      "nom": "Tablettes",
+      "image": "https://actu.meilleurmobile.com/wp-content/uploads/2015/03/tablets-montage.jpg",
+      "description": "Appareils portables à écran tactile."
+    },
+    {
+      "id": "4",
+      "nom": "Téléviseurs",
+      "image": "https://tse2.mm.bing.net/th/id/OIP.U7qxDFT9xtU1PJcZ28cDAgHaD4?rs=1&pid=ImgDetMain",
+      "description": "Téléviseurs HD, 4K, OLED, et autres types."
+    },
+    {
+      "id": "5",
+      "nom": "Casques audio",
+      "image": "https://www.nextnews.fr/wp-content/uploads/2018/06/Choisir-son-casque-audio.jpg",
+      "description": "Écouteurs et casques pour une expérience audio immersive."
+    },
+    {
+      "id": "6",
+      "nom": "Appareils photo numériques",
+      "image": "https://tuto-photos.com/wp-content/uploads/2018/06/Quels-sont-les-diff%C3%A9rents-types-dappareils-photo-num%C3%A9rique-800x574.jpg",
+      "description": "Caméras pour la photographie amateur et professionnelle."
+    },
+    {
+      "id": "7",
+      "nom": "Consoles de jeux",
+      "image": "https://th.bing.com/th/id/R.57aa8ebe8ccecf4bde57bc532142dd11?rik=C8mbVZt3MfrfAA&pid=ImgRaw&r=0",
+      "description": "Consoles de jeux vidéo de salon et portables."
+    },
+    {
+      "id": "8",
+      "nom": "Montres intelligentes",
+      "image": "https://media.istockphoto.com/id/539215939/photo/smart-watch-displaying-apps-icons.jpg?s=1024x1024&w=is&k=20&c=6pKyHZsj0GRGEvDJhxlhE5Ujtixa_eujA7RQW4MiAjc=",
+      "description": "Wearables avec suivi de santé et notifications."
+    },
+    {
+      "id": "9",
+      "nom": "Accessoires informatiques",
+      "image": "https://th.bing.com/th/id/R.7512afade607f43c6639c4c59a463dd3?rik=Ga16XN%2bU8VWBuQ&riu=http%3a%2f%2fmiraltech-dz.com%2fimages%2fequipement.jpg&ehk=u5FWURFz%2bdwQuxC%2fGvBLzGmUNtfbI4RVEqQpS5YqNJU%3d&risl=&pid=ImgRaw&r=0",
+      "description": "Claviers, souris, webcams, et autres périphériques."
+    },
+    {
+      "id ": 10,
+      "nom": "Composants PC",
+      "image": "https://c8.alamy.com/compfr/2bkwx7p/pc-ordinateur-composants-materiel-electronique-collage-cpu-micro-processeur-carte-graphique-alimentation-ddr-ram-casque-vr-lunettes-solid-state-ssd-hard-dr-2bkwx7p.jpg",
+      "description": "Cartes graphiques, processeurs, RAM, et autres composants internes.",
+      "id": "999d"
+    }
+  ],
+  "users": [
+    {
+      "id": "e7d7",
+      "username": "ouma",
+      "email": "oumaimathboukari@gmail.com",
+      "phoneNumber": "5814470405",
+      "prenom": "prenom",
+      "adresse": "G7X 3P3",
+      "password": "12345",
+      "role": "Administrateur"
+    },
+    {
+      "id": "e7d7",
+      "username": "admin",
+      "email": "admin@gmail.com",
+      "phoneNumber": "5814470405",
+      "prenom": "prenom",
+      "adresse": "G7X 3P3",
+      "password": "12345",
+      "role": "Administrateur"
+    },
+    {
+      "id": "e7d8",
+      "username": "ouma",
+      "email": "oumaimathboukari@gmail.com",
+      "phoneNumber": "5814470405",
+      "prenom": "prenom",
+      "adresse": "G7X 3P3",
+      "password": "12345",
+      "role": "Client"
+    }
+  ],
+  "paniers": [
+    {
+      "id": "1",
+      "userId": "e7d7",
+      "produits": [
+        {
+          "id": "1",
+          "quantite": 2
+        },
+        {
+          "id": "2",
+          "quantite": 1
+        }
+      ]
+    }
+  ],
+  "commandes": [
+    {
+      "id": "1",
+      "userId": "e7d7",
+      "dateCommande": "2023-06-01T12:34:56.789Z"
+    },
+    {
+      "id": "a59a",
+      "userId": "e7d7",
+      "dateCommande": "2025-05-12T19:25:36.422Z"
+    },
+    {
+      "id": "6c62",
+      "userId": "e7d7",
+      "dateCommande": "2025-05-12T19:43:38.845Z"
+    },
+    {
+      "id": "1ca2",
+      "userId": "e7d7",
+      "dateCommande": "2025-05-12T19:44:48.669Z"
+    },
+    {
+      "id": "eba7",
+      "userId": "e7d7",
+      "dateCommande": "2025-05-12T19:48:27.353Z"
+    },
+    {
+      "id": "e7cc",
+      "userId": "e7d7",
+      "dateCommande": "2025-05-12T20:08:46.348Z"
+    },
+    {
+      "id": "0161",
+      "userId": "e7d7",
+      "dateCommande": "2025-05-12T20:15:20.052Z"
+    },
+    {
+      "id": "815e",
+      "userId": "e7d7",
+      "dateCommande": "2025-05-12T20:18:01.396Z"
+    },
+    {
+      "id": "e02f",
+      "userId": "e7d7",
+      "dateCommande": "2025-05-12T20:24:21.192Z"
+    },
+    {
+      "id": "6f3d",
+      "userId": "e7d7",
+      "dateCommande": "2025-05-12T20:33:15.987Z"
+    },
+    {
+      "id": "bb1e",
+      "userId": "e7d7",
+      "dateCommande": "2025-05-12T20:35:44.588Z"
+    },
+    {
+      "id": "1399",
+      "userId": "e7d7",
+      "dateCommande": "2025-05-12T21:11:14.475Z"
+    },
+    {
+      "id": "7fe2",
+      "userId": "e7d7",
+      "dateCommande": "2025-05-12T21:28:17.536Z"
+    },
+    {
+      "id": "9fea",
+      "userId": "e7d7",
+      "dateCommande": "2025-05-12T21:30:41.942Z"
+    },
+    {
+      "id": "013d",
+      "userId": "e7d7",
+      "dateCommande": "2025-05-12T22:12:12.121Z"
+    },
+    {
+      "id": "9fa3",
+      "userId": "e7d7",
+      "dateCommande": "2025-05-13T03:46:08.970Z"
+    },
+    {
+      "id": "a1c7",
+      "userId": "e7d7",
+      "dateCommande": "2025-05-15T14:08:09.046Z"
+    }
+  ],
+  "commandesProduits": [
+    {
+      "id": "1",
+      "commandeId": "1",
+      "produitId": "1",
+      "quantite": 2
+    },
+    {
+      "id": "2",
+      "commandeId": "1",
+      "produitId": "2",
+      "quantite": 1
+    },
+    {
+      "id": "80cf",
+      "commandeId": "1747077936891",
+      "produitId": "1",
+      "quantite": 4
+    },
+    {
+      "id": "9c1a",
+      "commandeId": "1747077936891",
+      "produitId": "7",
+      "quantite": 2
+    },
+    {
+      "id": "0ece",
+      "commandeId": "1747079019032",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "2cc4",
+      "commandeId": "1747079088839",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "a479",
+      "commandeId": "1747079307522",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "8f1c",
+      "commandeId": "1747080526523",
+      "produitId": "1",
+      "quantite": 1
+    },
+    {
+      "id": "6d87",
+      "commandeId": "1747080920245",
+      "produitId": "6",
+      "quantite": 1
+    },
+    {
+      "id": "87b0",
+      "commandeId": "1747081081609",
+      "produitId": "6",
+      "quantite": 1
+    },
+    {
+      "id": "a38b",
+      "commandeId": "1747081461392",
+      "produitId": "6",
+      "quantite": 1
+    },
+    {
+      "id": "5844",
+      "commandeId": "1747081996160",
+      "produitId": "6",
+      "quantite": 1
+    },
+    {
+      "id": "ec15",
+      "commandeId": "1747082144813",
+      "produitId": "6",
+      "quantite": 1
+    },
+    {
+      "id": "7af8",
+      "commandeId": "1747085297702",
+      "produitId": "2",
+      "quantite": 1
+    },
+    {
+      "id": "e190",
+      "commandeId": "1747085442162",
+      "produitId": "2",
+      "quantite": 1
+    },
+    {
+      "id": "756e",
+      "commandeId": "1747087932355",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "08bd",
+      "commandeId": "1747107969921",
+      "produitId": "8",
+      "quantite": 1
+    },
+    {
+      "id": "ff60",
+      "commandeId": "1747318090148",
+      "produitId": "9",
+      "quantite": 1
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { FaKey, FaEnvelope, FaUser } from "react-icons/fa";
+import { useUser } from "./userContext";
+import {userProvider} from "./userContext";
+
+
+
+
+
+export default function Connexion() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const { loginUser } = useUser();
+
+  const handleEmailChange = (e) => setEmail(e.target.value);
+  const handlePasswordChange = (e) => setPassword(e.target.value);
+  const handleUsernameChange = (e) => setUsername(e.target.value);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+  
+    if (!email || !password) {
+      setError("Veuillez remplir tous les champs obligatoires.");
+      return;
+    }
+  
+    try {
+      const response = await fetch("https://localhost:7173/api/Accounts/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email,username, password }),
+      });
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(data.message || "Erreur lors de la connexion.");
+      }
+  
+      const userData = {
+        id: data.UserId,
+        token: data.Token,
+      };
+  
+      console.log("User data:", userData);
+  
+      localStorage.setItem("user", JSON.stringify(userData)); // Stocke les données utilisateur
+      loginUser(userData); // Mettre à jour le contexte utilisateur
+  
+      router.push("/"); // Redirige vers la page principale
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+  
+
+
+  return (
+    <>
+      <div className="container">
+        <div className="row d-flex justify-content-center align-items-center">
+          <div className="col-lg-12 col-xl-11">
+            <div className="card text-black" >
+              <div className="card-body p-md-5">
+                <div className="row justify-content-center">
+                  <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                  
+                    <img src="/image/connexion1.svg" className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4" alt=""/>
+                    {error && <p className="text-danger text-center">{error}</p>}
+                    {success && (
+                      <p className="text-success text-center">{success}</p>
+                    )}
+
+                    <form onSubmit={handleSubmit}>
+                      <div className=" mb-4 d-flex align-items-center">
+                        <FaEnvelope className="me-3 fs-4"/>
+                          <input type="email" id="email" className="form-control" value={email} onChange={handleEmailChange} required placeholder="Email" />
+                        </div>
+                     
+
+                      <div className=" mb-4 d-flex align-items-center">
+                      <FaKey className="me-3 fs-4"/>
+                          <input type="password" id="password" className="form-control" value={password} onChange={handlePasswordChange} placeholder="Password" required/>
+                      </div>
+                      
+                      <div className=" mb-4 d-flex align-items-center">
+                      <FaUser className="me-3 fs-4"/>
+                          <input type="text" id="username" className="form-control" value={username} onChange={handleUsernameChange} placeholder="Username" required/>
+                      </div>
+
+                      <div className="row mb-4">
+                        <div className="col d-flex justify-content-center">
+                          <div className="form-check">
+                            <input
+                              className="form-check-input"  type="checkbox" value="" id="form1Example3" defaultChecked/>
+                            <label className="form-check-label" >  Remember me </label>
+                          </div>
+                        </div>
+                        <div className="col">
+                          <a href="#!">Forgot password?</a>
+                        </div>
+                      </div>
+
+
+                      <div className="d-flex justify-content-center">
+                        <button type="submit"  className="btn btn-primary btn-block">  Sign in </button>
+                      </div>
+                    </form>
+                  </div>
+
+                  <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+                    <img src="https://img.freepik.com/free-vector/access-control-system-abstract-concept-illustration-security-system-authorize-entry-login-credentials-electronic-access-password-pass-phrase-pin-verification_335657-3373.jpg?t=st=1746257807~exp=1746261407~hmac=c27bd4519377b612aad13217ebed54e91cd982363f81e2cb969ef89b5f37273c&w=740" className="img-fluid"  alt="Login Illustration"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
