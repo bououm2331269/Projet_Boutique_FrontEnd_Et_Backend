@@ -11,7 +11,7 @@ export default function ProductCards() {
 
     async function fetchProduits() {
         try {
-            const response = await fetch("https://projet-prog4e06.cegepjonquiere.ca/api/Produits");
+            const response = await fetch("http://localhost:3000/produits");
             if (!response.ok) {
                 throw new Error("Erreur lors du chargement du fichier JSON");
             }
@@ -51,9 +51,7 @@ export default function ProductCards() {
 
     return (
         <div className="container-fluid my-5">
-            <h2 className="text-center mb-4">
-                <img src="/images/logo-nos-produits.webp" alt="Logo" style={{ width: "100px", height: "100px" }}></img>
-            </h2>
+            
             <div className="input-group w-100 mb-3">
                 <span className="input-group-text">
                     <i className="bi bi-search " style={{ color: "rgb(255, 145, 73)" }} ></i>

@@ -4,12 +4,12 @@ import { UserCircle, Home } from "lucide-react";
 export default function Header() {
     return (
         <div className="d-flex justify-content-between align-items-center m-2 bg-light">
-            <a href="http://localhost:3000">
+            <a href={`/acceuil`}>
                 <img src="../image/logo.png" alt="Logo" height="100" className="m-3" />
             </a>
            
 
-            <a href={`/`} style={{ color: "rgb(255, 145, 73)", fontSize: "24px",textDecoration: "none"}}>
+            <a href={`/acceuil`} style={{ color: "rgb(255, 145, 73)", fontSize: "24px",textDecoration: "none"}}>
                 <Home size={32} className="text-gray-500"/>  
             </a>
             <a href={`/panier`} style={{ color: "rgb(255, 145, 73)", fontSize: "24px",textDecoration: "none" }}>

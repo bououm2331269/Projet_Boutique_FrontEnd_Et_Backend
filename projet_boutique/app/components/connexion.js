@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { FaKey, FaEnvelope, FaUser } from "react-icons/fa";
+import { FaKey, FaUser } from "react-icons/fa";
 import { useUser } from "./userContext";
 import {userProvider} from "./userContext";
 
@@ -12,30 +12,31 @@ import {userProvider} from "./userContext";
 
 export default function Connexion() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const { loginUser } = useUser();
 
-  const handleEmailChange = (e) => setEmail(e.target.value);
-  const handlePasswordChange = (e) => setPassword(e.target.value);
   const handleUsernameChange = (e) => setUsername(e.target.value);
+  const handlePasswordChange = (e) => setPassword(e.target.value);
 
   async function handleSubmit(e) {
     e.preventDefault();
   
-    if (!email || !password) {
+    if (!username || !password) {
       setError("Veuillez remplir tous les champs obligatoires.");
       return;
     }
+
+    const role =
+    username === "admin" && password === "Admin123" ? "Administrateur" : "Client";
   
     try {
-      const response = await fetch("https://localhost:7173/api/Accounts/login", {
+      const response = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email,username, password }),
+        body: JSON.stringify({ username, password, role }),
       });
   
       const data = await response.json();
@@ -45,8 +46,9 @@ export default function Connexion() {
       }
   
       const userData = {
-        id: data.UserId,
-        token: data.Token,
+        id: data.user.id,
+        username: data.user.username,
+        role: data.user.role, // Inclure le rôle de l'utilisateur
       };
   
       console.log("User data:", userData);
@@ -54,7 +56,12 @@ export default function Connexion() {
       localStorage.setItem("user", JSON.stringify(userData)); // Stocke les données utilisateur
       loginUser(userData); // Mettre à jour le contexte utilisateur
   
-      router.push("/"); // Redirige vers la page principale
+      // Redirection basée sur le rôle
+    if (userData.role === "Administrateur") {
+      router.push("/pageAdmin"); // Rediriger vers le tableau de bord admin
+    } else {
+      router.push("/acceuil"); // Rediriger vers la page d'accueil pour utilisateurs classiques
+    }
     } catch (err) {
       setError(err.message);
     }
@@ -80,19 +87,14 @@ export default function Connexion() {
 
                     <form onSubmit={handleSubmit}>
                       <div className=" mb-4 d-flex align-items-center">
-                        <FaEnvelope className="me-3 fs-4"/>
-                          <input type="email" id="email" className="form-control" value={email} onChange={handleEmailChange} required placeholder="Email" />
+                        <FaUser className="me-3 fs-4"/>
+                          <input type="text" id="username" className="form-control" value={username} onChange={handleUsernameChange} required placeholder="Username" />
                         </div>
                      
 
                       <div className=" mb-4 d-flex align-items-center">
                       <FaKey className="me-3 fs-4"/>
                           <input type="password" id="password" className="form-control" value={password} onChange={handlePasswordChange} placeholder="Password" required/>
-                      </div>
-                      
-                      <div className=" mb-4 d-flex align-items-center">
-                      <FaUser className="me-3 fs-4"/>
-                          <input type="text" id="username" className="form-control" value={username} onChange={handleUsernameChange} placeholder="Username" required/>
                       </div>
 
                       <div className="row mb-4">

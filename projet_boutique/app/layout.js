@@ -1,8 +1,12 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import  "./script_CSS/style.css";
-import Header from "./components/header";
 import UserProvider from "@/app/components/userContext";
+import ChargerPanier from "@/app/components/chargerPanier";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+
+import Script from "next/script";
+
+
 
 import { CartProvider } from "@/app/components/panier";
 
@@ -22,6 +26,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  
   return (
     <html lang="en">
       <head>
@@ -33,11 +38,15 @@ export default function RootLayout({ children }) {
       <body className={`${geistSans.variable} ${geistMono.variable}`} style={{backgroundColor:""}}>
       <UserProvider>
       <CartProvider>
-      <Header />
+        
+        <ChargerPanier/>
         {children}
       </CartProvider>
       </UserProvider>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+      <Script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+  strategy="afterInteractive"
+/>
        
       </body>
     </html>

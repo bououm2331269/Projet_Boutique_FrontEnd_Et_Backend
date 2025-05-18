@@ -1,13 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { Edit } from "lucide-react";
+import HeaderAdmin from "./headerAdmin";
 
 export default function AcceuilAdmin() {
   const [produits, setProduits] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
-    fetch("https://projet-prog4e06.cegepjonquiere.ca/api/Produits")
+    fetch("http://localhost:3000/produits")
       .then((res) => res.json())
       .then((data) => setProduits(data))
       .catch((err) => console.error(err));
@@ -15,8 +17,8 @@ export default function AcceuilAdmin() {
 
   const updateProduitBackend = async (id, updatedFields) => {
     try {
-      const res = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Produits/${id}`, {
-        method: "PUT", // Ou PUT selon ton backend
+      const res = await fetch(`http://localhost:3000/produits/${id}`, {
+        method: "PATCH", // Ou PUT selon ton backend
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedFields),
       });
@@ -31,7 +33,7 @@ export default function AcceuilAdmin() {
 
   const deleteProduitBackend = async (id) => {
     try {
-      const res = await fetch(`https://localhost:7173/api/Produits/${id}`, {
+      const res = await fetch(`http://localhost:3000/produits/${id}`, {
         method: "DELETE",
       });
       if (!res.ok) throw new Error("Erreur lors de la suppression");
@@ -99,6 +101,8 @@ export default function AcceuilAdmin() {
   };
 
   return (
+    <>
+  <HeaderAdmin />
     <div className="container-fluid my-5">
       <h1 className="text-center mb-5">Gestion des Produits</h1>
 
@@ -147,6 +151,7 @@ export default function AcceuilAdmin() {
                   <button
                     className="btn btn-sm btn-secondary flex-fill"
                     onClick={() => router.push(`/pageModifProduit/${produit.id}`)}
+                    
                   >
                     Modifier
                   </button>
@@ -159,5 +164,6 @@ export default function AcceuilAdmin() {
         {produits.length === 0 && <p className="text-center">Aucun produit trouvé.</p>}
       </div>
     </div>
+    </>
   );
 }

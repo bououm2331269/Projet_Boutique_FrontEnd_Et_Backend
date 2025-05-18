@@ -1,13 +1,32 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import { useEffect, useContext } from "react";
+import { CartContext } from "@/app/components/panier";
+import { useUser } from "@/app/components/userContext";
+import Header from "@/app/components/header";
 
 export default function PaymentSuccess() {
   const searchParams = useSearchParams();
   const amount = searchParams.get("amount");
+  const { clearCart } = useContext(CartContext);
+  const { user } = useUser();
+
+  useEffect(() => {
+    if (user && user.id) {
+      console.log("Appel de clearCart pour l'utilisateur :", user);
+      clearCart();
+    }
+  }, [user]);
+
+  if (!user) {
+    return <div>Chargement des données utilisateur...</div>;
+  }
 
   if (!amount) {
     return (
+      <>
+      <Header />
       <div className="container my-5">
         <div className="card text-center bg-danger text-white">
           <div className="card-body">
@@ -16,10 +35,13 @@ export default function PaymentSuccess() {
           </div>
         </div>
       </div>
+      </>
     );
   }
 
   return (
+  <>
+  <Header />
     <div className="container my-5">
       <div className="card text-center bg-primary text-white">
         <div className="card-body">
@@ -31,5 +53,6 @@ export default function PaymentSuccess() {
         </div>
       </div>
     </div>
+    </>
   );
 }

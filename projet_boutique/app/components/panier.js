@@ -2,77 +2,212 @@
 import { useState, createContext, useContext, useEffect } from "react";
 import { useUser } from "./userContext";
 import { useRouter } from "next/navigation";
+import set from "localbase/localbase/api/actions/set";
+
 
 // Contexte pour le panier
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
+  const { user } = useUser(); 
 
   useEffect(() => {
-    const savedCart = JSON.stringify(cartItems);
-    if (localStorage.getItem("cart") !== savedCart) {
-      localStorage.setItem("cart", savedCart);
-    }
+    // Charger le panier depuis le localStorage lors du montage
+  /*  const savedCart = localStorage.getItem("cart");
+    if (savedCart) {
+      setCartItems(JSON.parse(savedCart));
+    }*/
+  }, []);
+
+  useEffect(() => {
+    // Sauvegarder le panier dans le localStorage à chaque modification
+    localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
-  
 
-  const addToCart = (product) => {
-    setCartItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.id === product.id);
-      if (existingItem) {
-        return prevItems.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-        );
-      }
-      return [...prevItems, { ...product, quantity: 1 }];
-    });
-  };
-
-  const removeFromCart = (id) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
-  };
-
-  const clearCart = () => {
-    console.log("clearCart est appelé");
-    setCartItems([]);
-  };
-
-  let isUpdating = false;
-
-  const updateQuantity = async (id, quantity) => {
-    if (isUpdating) return;
-    isUpdating = true;
-  
+  const addToCart = async (product) => {
     try {
-      const response = await fetch(`http://localhost:3000/produits/${id}`);
-      if (!response.ok) throw new Error("Erreur lors de la récupération des données.");
-      const product = await response.json();
+      // Récupérer le panier existant pour l'utilisateur
+      const res = await fetch(`http://localhost:3000/paniers?userId=${user.id}`);
+      if (!res.ok) throw new Error("Erreur récupération panier");
+      const paniers = await res.json();
+      const panier = paniers[0]; // On suppose 1 panier par user
   
-      if (!product) {
-        alert("Produit non trouvé dans les données stockées.");
+      // Mettre à jour la liste des produits localement
+      let updatedProduits = [];
+      if (panier) {
+        const existingItem = panier.produits.find(p => p.id === product.id);
+        if (existingItem) {
+          updatedProduits = panier.produits.map(p =>
+            p.id === product.id ? { ...p, quantite: p.quantite + 1 } : p
+          );
+        } else {
+          updatedProduits = [...panier.produits, { id: product.id, quantite: 1 }];
+        }
+      } else {
+        // Pas de panier pour cet user, on en crée un
+        updatedProduits = [{ id: product.id, quantite: 1 }];
+      }
+  
+      // Construire le panier à envoyer
+      const updatedPanier = panier
+        ? { ...panier, produits: updatedProduits }
+        : { userId: user.id, produits: updatedProduits };
+  
+      // Faire PUT ou POST selon existence
+      const method = panier ? "PUT" : "POST";
+      const url = panier
+        ? `http://localhost:3000/paniers/${panier.id}`
+        : `http://localhost:3000/paniers`;
+  
+      const response = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedPanier),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Erreur mise à jour panier");
+      }
+  
+      // Mettre à jour le state local (avec quantité et produit complet)
+      setCartItems(prev => {
+        const existing = prev.find(i => i.id === product.id);
+        if (existing) {
+          return prev.map(i => i.id === product.id ? { ...i, quantity: i.quantity + 1 } : i);
+        }
+        return [...prev, { ...product, quantity: 1 }];
+      });
+    } catch (error) {
+      console.error(error);
+      alert("Erreur lors de l'ajout au panier");
+    }
+  };
+  
+  const removeFromCart = async (productId) => {
+    try {
+      // 1. Récupérer le panier existant pour l'utilisateur
+      const res = await fetch(`http://localhost:3000/paniers?userId=${user.id}`);
+      if (!res.ok) throw new Error("Erreur récupération panier");
+      const paniers = await res.json();
+      const panier = paniers[0]; // supposé 1 panier par user
+  
+      if (!panier) {
+        alert("Aucun panier trouvé pour cet utilisateur");
         return;
       }
   
-      setCartItems((prevItems) =>
-        prevItems.map((item) => {
-          if (item.id === id) {
-            if (quantity > product.quantiteStock) {
-              alert(`La quantité maximale en stock pour ${product.nom} est ${product.quantiteStock}.`);
-              return { ...item, quantity: product.quantiteStock };
-            }
-            return { ...item, quantity: Math.max(quantity, 1) };
-          }
-          return item;
-        })
-      );
+      // 2. Filtrer les produits pour enlever celui à supprimer
+      const updatedProduits = panier.produits.filter(p => p.id !== productId);
+  
+      // 3. Construire le panier mis à jour
+      const updatedPanier = { ...panier, produits: updatedProduits };
+  
+      // 4. Envoyer la mise à jour via PUT
+      const response = await fetch(`http://localhost:3000/paniers/${panier.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedPanier),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Erreur lors de la mise à jour du panier");
+      }
+  
+      // 5. Mettre à jour le state local (React)
+      setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
     } catch (error) {
-      console.error("Erreur lors de la récupération des quantités :", error);
-      alert("Une erreur est survenue lors de la vérification des stocks.");
-    } finally {
-      isUpdating = false;
+      console.error(error);
+      alert("Erreur lors de la suppression du produit");
     }
   };
+  const clearCart = async () => {
+    try {
+      // Étape 1 : Récupérer le panier de l'utilisateur
+      const resPanier = await fetch(`http://localhost:3000/paniers?userId=${user.id}`);
+      if (!resPanier.ok) throw new Error("Erreur récupération du panier");
+      
+      const paniers = await resPanier.json();
+      const panier = paniers[0]; // Supposons que l'utilisateur n'a qu'un panier
+      if (!panier) {
+        alert("Aucun panier trouvé pour cet utilisateur");
+        return;
+      }
+
+      // Étape 2 : Supprimer les produits du panier dans l'API
+      const response = await fetch(`http://localhost:3000/paniers/${panier.id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+  
+      if (!response.ok) throw new Error("Erreur lors de la suppression des produits du panier");
+  
+      // Étape 3 : Supprimer le panier du localStorage
+      localStorage.removeItem("cart");
+  
+      // Étape 4 : Mettre à jour le state local
+      setCartItems([]); // Réinitialiser le panier localement
+     // alert("Votre panier a été vidé avec succès.");
+      console.log("Panier vidé dans l'API, le localStorage et localement.");
+    } catch (error) {
+      console.error("Erreur lors du vidage du panier :", error);
+      alert("Une erreur est survenue lors du vidage du panier.");
+    }
+  };
+  
+  
+
+  const updateQuantity = async (productId, quantity) => {
+    try {
+      // 1. Récupérer le panier actuel
+      const resPanier = await fetch(`http://localhost:3000/paniers?userId=${user.id}`);
+      if (!resPanier.ok) throw new Error("Erreur récupération panier");
+      const paniers = await resPanier.json();
+      const panier = paniers[0];
+      if (!panier) {
+        alert("Aucun panier trouvé pour cet utilisateur");
+        return;
+      }
+  
+      // 2. Récupérer les infos du produit pour vérifier stock
+      const resProduit = await fetch(`http://localhost:3000/produits/${productId}`);
+      if (!resProduit.ok) throw new Error("Erreur récupération produit");
+      const produit = await resProduit.json();
+  
+      // 3. Vérifier que la quantité demandée ne dépasse pas le stock
+      const newQuantity = Math.min(Math.max(quantity, 1), produit.quantiteStock);
+      if (quantity > produit.quantiteStock) {
+        alert(`La quantité maximale en stock pour ${produit.nom} est atteinte.`);
+      }
+  
+      // 4. Mettre à jour la liste des produits du panier avec la nouvelle quantité
+      const updatedProduits = panier.produits.map(p =>
+        p.id === productId ? { ...p, quantite: newQuantity } : p
+      );
+  
+      // 5. Construire le panier mis à jour
+      const updatedPanier = { ...panier, produits: updatedProduits };
+  
+      // 6. Envoyer la mise à jour au backend
+      const response = await fetch(`http://localhost:3000/paniers/${panier.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedPanier),
+      });
+      if (!response.ok) throw new Error("Erreur mise à jour panier");
+  
+      // 7. Mettre à jour le state local React
+      setCartItems(prevItems =>
+        prevItems.map(item =>
+          item.id === productId ? { ...item, quantity: newQuantity } : item
+        )
+      );
+    } catch (error) {
+      console.error(error);
+      alert("Erreur lors de la mise à jour de la quantité");
+    }
+  };
+  
   
 
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
@@ -86,6 +221,7 @@ export const CartProvider = ({ children }) => {
         removeFromCart,
         clearCart,
         updateQuantity,
+        setCartItems,
         cartCount,
         totalPrice,
       }}
@@ -94,6 +230,7 @@ export const CartProvider = ({ children }) => {
     </CartContext.Provider>
   );
 };
+
 
 export const CartComponent = () => {
   const {
@@ -148,14 +285,13 @@ export const CartComponent = () => {
         throw new Error("Erreur lors de l'enregistrement des commandes.");
       }
 
-     
-      alert("Commande enregistrée avec succès !");
       router.push("/paiement")
 
     } catch (error) {
       console.error("Erreur lors du paiement :", error.message);
       alert("Une erreur est survenue lors du traitement de la commande.");
     }
+    
   };
 
   return (

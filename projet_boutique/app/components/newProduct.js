@@ -4,7 +4,7 @@ import { useEffect, useState, useContext } from "react";
 import { CartContext } from "@/app/components/panier";
 import { useRouter } from "next/navigation";
 
-export default function ProductDetails({ id }) {
+export default function ProductAjoute({ id }) {
     const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -38,29 +38,17 @@ export default function ProductDetails({ id }) {
         return <div>Aucun produit disponible.</div>;
     }
 
-    const handleAddToCart = () => {
-        addToCart({
-            id: product.id,
-            nom: product.nom,
-            prix: product.prix,
-            image: product.image,
-            quantity: 1, // Quantité par défaut à ajouter
-        });
-        alert(`${product.nom} a été ajouté au panier !`);
-        
-        // Redirection vers la page panier
-        router.push("/panier");
-    };
 
     return (
         <div className="container my-5">
+            <h1 className="text-center mb-4 text-primary">Produit Ajoute</h1>
             <div className="row">
                 <div className="col-md-6 text-center">
                     <img
                         src={product.image}
                         alt={product.nom}
                         className="img-fluid rounded shadow-sm"
-                        style={{ maxHeight: "400px", objectFit: "contain" }}
+                        style={{ maxHeight: "600px", objectFit: "contain" }}
                     />
                 </div>
 
@@ -74,18 +62,7 @@ export default function ProductDetails({ id }) {
                             <strong>Quantité en stock :</strong> {product.quantiteStock}
                         </p>
                     </div>
-
-                    <button
-                        className="btn btn-lg w-100 mb-3 border-0 bg-secondary"
-                        onClick={handleAddToCart}
-                    >
-                        Ajouter au panier
-                    </button>
-                    <a href="/acceuil">
-                        <button className="btn btn-outline-secondary btn-lg w-100 bg-light">
-                            Retour
-                        </button>
-                    </a>
+                   
                 </div>
             </div>
         </div>

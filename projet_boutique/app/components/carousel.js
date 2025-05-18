@@ -7,7 +7,7 @@ export default function Carousel() {
 
     async function fetchProduits() {
         try {
-            const response = await fetch("https://projet-prog4e06.cegepjonquiere.ca/api/Produits");
+            const response = await fetch("http://localhost:3000/produits");
             if (!response.ok) {
                 throw new Error("Erreur lors du chargement du fichier JSON");
             }
@@ -60,8 +60,8 @@ export default function Carousel() {
                                 className="d-block w-100 rounded"
                                 alt={produit.nom}
                                 style={{
-                                    maxHeight: "1000px", 
-                                    objectFit: "cover", 
+                                    maxHeight: "1000px", // Limite la hauteur maximale
+                                    objectFit: "cover", // Empêche le recadrage de l'image
                                     width: "auto", 
                                 }}
                               

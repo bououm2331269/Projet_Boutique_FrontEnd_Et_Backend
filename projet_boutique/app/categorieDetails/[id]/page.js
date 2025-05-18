@@ -1,6 +1,7 @@
 "use client";
 import React, { use,useEffect, useState } from "react";
 import CategorieDetails from "@/app/components/categorieDetails";
+import Header from "@/app/components/header";
 
 export default function CategorieProduit({params}) {
     const p = use(params);
@@ -10,7 +11,11 @@ export default function CategorieProduit({params}) {
         setIdCategorie(id);
     })
     return (
-        <CategorieDetails id={categorieId} />
+        <>
+            <Header />
+            <CategorieDetails id={categorieId} />
+        </>
+        
     );
 
 }

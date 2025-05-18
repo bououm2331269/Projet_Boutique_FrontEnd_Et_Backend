@@ -2,6 +2,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
 import { CartContext  } from "./panier";
+import { useUser } from "./userContext";
 
 export default function CheckoutForm({amount}) {
   const stripe = useStripe();
@@ -11,7 +12,7 @@ export default function CheckoutForm({amount}) {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const { clearCart } = useContext(CartContext); // Utilisation du contexte();
-
+  const { user } = useUser(); 
 
   console.log("Montant envoyé au backend:", amount);
 
@@ -81,13 +82,14 @@ export default function CheckoutForm({amount}) {
         confirmParams: {
           return_url: `http://localhost:3001/payment-success?amount=${amount}`,
         },
+        
       });
       
       if (result.error) {
         setError(result.error.message);
       } else if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
         setSuccess(true);
-        clearCart(); // Vider le panier après un paiement réussi
+       // Vider le panier après un paiement réussi
       }
     } catch (err) {
       console.error("Erreur lors de la soumission :", err);
@@ -96,7 +98,7 @@ export default function CheckoutForm({amount}) {
   
     setLoading(false);
   };
-
+ 
   if (!clientSecret) {
     return <div>Chargement du formulaire de paiement...</div>;
   }

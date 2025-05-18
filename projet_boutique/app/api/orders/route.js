@@ -14,13 +14,12 @@ export async function POST(request) {
       );
     }
 
-    const commandeId = `${Date.now()}`;
-
     const nouvelleCommande = {
       userId,
       dateCommande: commande.dateCommande || new Date().toISOString(),
     };
 
+    // Enregistrement de la commande
     const commandeResponse = await fetch("http://localhost:3000/commandes", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -31,12 +30,17 @@ export async function POST(request) {
       throw new Error("Erreur lors de l'enregistrement de la commande.");
     }
 
-    const produitsAvecCommandeId = commandesProduits.map((produit, index) => ({
-      commandeId,
+    const savedCommande = await commandeResponse.json();
+    const commandeId = savedCommande.id; // Assurez-vous que le service retourne l'ID de la commande
+
+    // Enrichir chaque produit avec l'ID de la commande
+    const produitsAvecCommandeId = commandesProduits.map((produit) => ({
+      commandeId, // Utiliser l'ID de la commande récupéré
       produitId: produit.produitId,
       quantite: produit.quantite,
     }));
 
+    // Enregistrement des produits associés
     const produitsPromises = produitsAvecCommandeId.map((produit) =>
       fetch("http://localhost:3000/commandesProduits", {
         method: "POST",
@@ -53,7 +57,7 @@ export async function POST(request) {
 
     return NextResponse.json({
       message: "Commande enregistrée avec succès.",
-      commande: nouvelleCommande,
+      commande: savedCommande,
       produits: produitsAvecCommandeId,
     });
   } catch (error) {

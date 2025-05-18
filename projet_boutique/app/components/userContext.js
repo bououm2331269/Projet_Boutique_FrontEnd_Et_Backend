@@ -7,7 +7,7 @@ export const UserContext = createContext();
 
 // Fournisseur de contexte utilisateur
 export default function UserProvider({ children }) {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     // Vérifiez si un utilisateur est stocké dans localStorage au chargement

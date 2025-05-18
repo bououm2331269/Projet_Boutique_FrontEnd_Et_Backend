@@ -12,6 +12,7 @@ export default function Inscription() {
     Adresse: "",
     Password: "",
     ConfirmPassword: "",
+    role: "",
   });
 
   const [error, setError] = useState("");
@@ -26,7 +27,7 @@ export default function Inscription() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Validate form data
     if (
       !formData.Username ||
@@ -37,21 +38,27 @@ export default function Inscription() {
       setError("Veuillez remplir tous les champs obligatoires.");
       return;
     }
-
+  
     if (!/\S+@\S+\.\S+/.test(formData.Email)) {
       setError("L'adresse e-mail est invalide.");
       return;
     }
-
+  
     if (formData.Password !== formData.ConfirmPassword) {
       setError("Les mots de passe ne correspondent pas.");
       return;
     }
-
+  
+    // Déterminer le rôle de l'utilisateur
+    const role =
+      formData.Username === "admin" && formData.Password === "Admin123"
+        ? "Administrateur"
+        : "Client";
+  
     // Reset error state and show loading
     setError("");
     setLoading(true);
-
+  
     try {
       // Call your API
       const response = await fetch("http://localhost:3000/users", {
@@ -66,14 +73,15 @@ export default function Inscription() {
           prenom: formData.Prenom,
           adresse: formData.Adresse,
           password: formData.Password,
+          role, // Inclure le rôle dans les données envoyées
         }),
       });
-
+  
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || "Une erreur est survenue.");
       }
-
+  
       setSuccess("Inscription réussie !");
       setFormData({
         Username: "",
@@ -84,7 +92,7 @@ export default function Inscription() {
         Password: "",
         ConfirmPassword: "",
       });
-
+  
       setTimeout(() => {
         router.push("/connexion");
       }, 2000);
@@ -94,6 +102,7 @@ export default function Inscription() {
       setLoading(false);
     }
   };
+  
 
   return (
     <section id="inscription">

@@ -7,7 +7,7 @@ export default function CategorieDetails({id}) {
     const [loading, setLoading] = useState(true);
     async function fetchCategorieDetails() {
         try {
-            const response = await fetch(`https://localhost:7173/api/Produits/groupByCategory/${id}`);
+            const response = await fetch(`http://localhost:3000/produits?categorieProduitId=${id}`);
             if (!response.ok) {
                 throw new Error("Erreur lors du chargement du fichier JSON");
             }
