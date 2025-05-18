@@ -11,7 +11,7 @@ export default function ProductCards() {
 
     async function fetchProduits() {
         try {
-            const response = await fetch("http://localhost:3000/produits");
+            const response = await fetch("https://projet-prog4e06.cegepjonquiere.ca/api/Produits");
             if (!response.ok) {
                 throw new Error("Erreur lors du chargement du fichier JSON");
             }

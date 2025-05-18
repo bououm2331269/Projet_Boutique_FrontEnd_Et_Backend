@@ -60,8 +60,8 @@ export default function Inscription() {
     setLoading(true);
   
     try {
-      // Call your API
-      const response = await fetch("http://localhost:3000/users", {
+      // Call your API   ?????Revenir
+      const response = await fetch("https://projet-prog4e06.cegepjonquiere.ca/api/Accounts/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

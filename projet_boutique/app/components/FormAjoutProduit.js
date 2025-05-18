@@ -8,7 +8,7 @@ export default function FormAjoutProduit() {
 
 
   useEffect(() => {
-    fetch("http://localhost:3000/categories")
+    fetch("https://projet-prog4e06.cegepjonquiere.ca/api/Categories")
       .then((res) => res.json())
       .then((data) => setCategories(data));
   }, []);
@@ -40,7 +40,7 @@ export default function FormAjoutProduit() {
       return;
     }
 
-    const response = await fetch("http://localhost:3000/produits", {
+    const response = await fetch("https://projet-prog4e06.cegepjonquiere.ca/api/Produits", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

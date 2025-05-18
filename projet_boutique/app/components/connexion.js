@@ -33,7 +33,7 @@ export default function Connexion() {
     username === "admin" && password === "Admin123" ? "Administrateur" : "Client";
   
     try {
-      const response = await fetch("/api/login", {
+      const response = await fetch("https://projet-prog4e06.cegepjonquiere.ca/api/Accounts/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password, role }),

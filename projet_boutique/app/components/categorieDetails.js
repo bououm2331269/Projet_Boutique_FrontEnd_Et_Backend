@@ -7,7 +7,7 @@ export default function CategorieDetails({id}) {
     const [loading, setLoading] = useState(true);
     async function fetchCategorieDetails() {
         try {
-            const response = await fetch(`http://localhost:3000/produits?categorieProduitId=${id}`);
+            const response = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Produits?categorieProduitId=${id}`);
             if (!response.ok) {
                 throw new Error("Erreur lors du chargement du fichier JSON");
             }

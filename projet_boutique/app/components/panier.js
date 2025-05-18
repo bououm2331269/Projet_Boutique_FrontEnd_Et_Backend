@@ -28,7 +28,7 @@ export const CartProvider = ({ children }) => {
   const addToCart = async (product) => {
     try {
       // Récupérer le panier existant pour l'utilisateur
-      const res = await fetch(`http://localhost:3000/paniers?userId=${user.id}`);
+      const res = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Panier/user/${user.id}`);
       if (!res.ok) throw new Error("Erreur récupération panier");
       const paniers = await res.json();
       const panier = paniers[0]; // On suppose 1 panier par user
@@ -57,8 +57,8 @@ export const CartProvider = ({ children }) => {
       // Faire PUT ou POST selon existence
       const method = panier ? "PUT" : "POST";
       const url = panier
-        ? `http://localhost:3000/paniers/${panier.id}`
-        : `http://localhost:3000/paniers`;
+        ? `https://projet-prog4e06.cegepjonquiere.ca/api/Panier/${panier.id}`
+        : `https://projet-prog4e06.cegepjonquiere.ca/api/Panier`;
   
       const response = await fetch(url, {
         method,
@@ -87,7 +87,7 @@ export const CartProvider = ({ children }) => {
   const removeFromCart = async (productId) => {
     try {
       // 1. Récupérer le panier existant pour l'utilisateur
-      const res = await fetch(`http://localhost:3000/paniers?userId=${user.id}`);
+      const res = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Panier/user/${user.id}`);
       if (!res.ok) throw new Error("Erreur récupération panier");
       const paniers = await res.json();
       const panier = paniers[0]; // supposé 1 panier par user
@@ -104,7 +104,7 @@ export const CartProvider = ({ children }) => {
       const updatedPanier = { ...panier, produits: updatedProduits };
   
       // 4. Envoyer la mise à jour via PUT
-      const response = await fetch(`http://localhost:3000/paniers/${panier.id}`, {
+      const response = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Panier/${panier.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedPanier),
@@ -124,7 +124,7 @@ export const CartProvider = ({ children }) => {
   const clearCart = async () => {
     try {
       // Étape 1 : Récupérer le panier de l'utilisateur
-      const resPanier = await fetch(`http://localhost:3000/paniers?userId=${user.id}`);
+      const resPanier = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Panier/user/${user.id}`);
       if (!resPanier.ok) throw new Error("Erreur récupération du panier");
       
       const paniers = await resPanier.json();
@@ -135,7 +135,7 @@ export const CartProvider = ({ children }) => {
       }
 
       // Étape 2 : Supprimer les produits du panier dans l'API
-      const response = await fetch(`http://localhost:3000/paniers/${panier.id}`, {
+      const response = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Panier/${panier.id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });
@@ -160,7 +160,7 @@ export const CartProvider = ({ children }) => {
   const updateQuantity = async (productId, quantity) => {
     try {
       // 1. Récupérer le panier actuel
-      const resPanier = await fetch(`http://localhost:3000/paniers?userId=${user.id}`);
+      const resPanier = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Panier/user/${user.id}`);
       if (!resPanier.ok) throw new Error("Erreur récupération panier");
       const paniers = await resPanier.json();
       const panier = paniers[0];
@@ -170,7 +170,7 @@ export const CartProvider = ({ children }) => {
       }
   
       // 2. Récupérer les infos du produit pour vérifier stock
-      const resProduit = await fetch(`http://localhost:3000/produits/${productId}`);
+      const resProduit = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Produits/${productId}`);
       if (!resProduit.ok) throw new Error("Erreur récupération produit");
       const produit = await resProduit.json();
   
@@ -189,7 +189,7 @@ export const CartProvider = ({ children }) => {
       const updatedPanier = { ...panier, produits: updatedProduits };
   
       // 6. Envoyer la mise à jour au backend
-      const response = await fetch(`http://localhost:3000/paniers/${panier.id}`, {
+      const response = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Panier/${panier.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedPanier),

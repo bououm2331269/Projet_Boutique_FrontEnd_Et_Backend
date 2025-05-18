@@ -14,13 +14,13 @@ export default function FormModifProduit({ id }) {
 
   useEffect(() => {
     // Charger les catégories
-    fetch("http://localhost:3000/categories")
+    fetch("https://projet-prog4e06.cegepjonquiere.ca/api/Categories")
       .then((res) => res.json())
       .then((data) => setCategories(data));
 
     // Charger le produit
     async function chargerProduit() {
-      const res = await fetch(`http://localhost:3000/produits/${id}`);
+      const res = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Produits/${id}`);
       const data = await res.json();
       setProduct(data);
     }
@@ -45,7 +45,7 @@ export default function FormModifProduit({ id }) {
       categorieProduitId: Number(categorieId),
     };
 
-    const response = await fetch(`http://localhost:3000/produits/${id}`, {
+    const response = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Produits/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

@@ -7,7 +7,7 @@ export default function Categorie() {
 
   async function fetchCategorie() {
     try {
-      const response = await fetch("http://localhost:3000/categories");
+      const response = await fetch("https://projet-prog4e06.cegepjonquiere.ca/api/Categories");
       if (!response.ok) {
         throw new Error("Erreur lors du chargement du fichier JSON");
       }
