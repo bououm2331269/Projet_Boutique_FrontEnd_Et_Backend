@@ -9,13 +9,13 @@ import Header from "@/app/components/header";
 export default function PaymentSuccess() {
   const searchParams = useSearchParams();
   const amount = searchParams.get("amount");
-  const { clearCart } = useContext(CartContext);
   const { user } = useUser();
 
   useEffect(() => {
     if (user && user.id) {
       console.log("Appel de clearCart pour l'utilisateur :", user);
-      clearCart();
+    
+
     }
   }, [user]);
 

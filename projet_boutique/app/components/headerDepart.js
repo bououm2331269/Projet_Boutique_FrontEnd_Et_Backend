@@ -18,7 +18,7 @@ export default function HeaderDepart() {
 
         <nav className="d-flex align-items-center gap-4">
           <a
-            href="/inscription"
+            href="/inscriptionClient"
             className="d-flex align-items-center text-decoration-none text-success"
           >
             <UserPlus size={24} className="me-2" />

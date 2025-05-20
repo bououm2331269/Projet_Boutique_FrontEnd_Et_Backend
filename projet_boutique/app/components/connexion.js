@@ -5,6 +5,7 @@ import { useState } from "react";
 import { FaKey, FaUser } from "react-icons/fa";
 import { useUser } from "./userContext";
 import {userProvider} from "./userContext";
+import jwt from "jsonwebtoken";
 
 
 
@@ -14,12 +15,14 @@ export default function Connexion() {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const { loginUser } = useUser();
 
   const handleUsernameChange = (e) => setUsername(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
+  const handleEmailChange = (e) => setEmail(e.target.value);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -29,14 +32,12 @@ export default function Connexion() {
       return;
     }
 
-    const role =
-    username === "admin" && password === "Admin123" ? "Administrateur" : "Client";
   
     try {
-      const response = await fetch("/api/login", {
+      const response = await fetch("https://projet-prog4e06.cegepjonquiere.ca/api/Accounts/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password, role }),
+        body: JSON.stringify({ username,email, password }),
       });
   
       const data = await response.json();
@@ -45,15 +46,23 @@ export default function Connexion() {
         throw new Error(data.message || "Erreur lors de la connexion.");
       }
   
+      setSuccess("Connexion reussie!");
+      const token = data.token; // Token renvoyé par l'API
+      const userId = data.userId;
+  
+      const decodedToken = jwt.decode(token); 
+      console.log("Decoded Token:", decodedToken);
+  
+      // Stocker les données utilisateur
       const userData = {
-        id: data.user.id,
-        username: data.user.username,
-        role: data.user.role, // Inclure le rôle de l'utilisateur
+        id: userId, 
+        role: decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"],
+        token,
       };
   
       console.log("User data:", userData);
   
-      localStorage.setItem("user", JSON.stringify(userData)); // Stocke les données utilisateur
+     // localStorage.setItem("user", JSON.stringify(userData)); // Stocke les données utilisateur
       loginUser(userData); // Mettre à jour le contexte utilisateur
   
       // Redirection basée sur le rôle
@@ -90,7 +99,10 @@ export default function Connexion() {
                         <FaUser className="me-3 fs-4"/>
                           <input type="text" id="username" className="form-control" value={username} onChange={handleUsernameChange} required placeholder="Username" />
                         </div>
-                     
+                        <div className=" mb-4 d-flex align-items-center">
+                      <FaKey className="me-3 fs-4"/>
+                          <input type="email" id="email" className="form-control" value={email} onChange={handleEmailChange} placeholder="Email" required/>
+                      </div>
 
                       <div className=" mb-4 d-flex align-items-center">
                       <FaKey className="me-3 fs-4"/>

@@ -7,7 +7,7 @@ export default function Carousel() {
 
     async function fetchProduits() {
         try {
-            const response = await fetch("http://localhost:3000/produits");
+            const response = await fetch("https://projet-prog4e06.cegepjonquiere.ca/api/Produits");
             if (!response.ok) {
                 throw new Error("Erreur lors du chargement du fichier JSON");
             }
@@ -24,9 +24,6 @@ export default function Carousel() {
         fetchProduits();
     }, []);
 
-    /*if (loading) {
-        return <div>Chargement en cours...</div>;
-    }*/
 
     if (produits.length === 0) {
         return <div>Aucun produit disponible.</div>;

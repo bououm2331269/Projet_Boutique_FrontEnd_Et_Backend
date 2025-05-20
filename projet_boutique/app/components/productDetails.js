@@ -13,7 +13,7 @@ export default function ProductDetails({ id }) {
 
     async function fetchProduct() {
         try {
-            const response = await fetch(`http://localhost:3000/produits/${id}`);
+            const response = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Produits/${id}`);
             if (!response.ok) {
                 throw new Error("Erreur lors du chargement du fichier JSON");
             }
@@ -70,9 +70,6 @@ export default function ProductDetails({ id }) {
 
                     <div className="mb-4">
                         <span className="h4 text-success">{product.prix} $</span>
-                        <p className="text-muted">
-                            <strong>Quantité en stock :</strong> {product.quantiteStock}
-                        </p>
                     </div>
 
                     <button

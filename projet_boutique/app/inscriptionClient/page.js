@@ -1,12 +1,12 @@
 "use client";
-import Inscription from "@/app/components/inscription";
+import InscriptionClient from "@/app/components/inscriptionClient";
 import HeaderDepart from "@/app/components/headerDepart";
 
 export default function InscriptionPage() {
     return (
         <>
             <HeaderDepart />
-            <Inscription />
+            <InscriptionClient />
         </>
     );
 }
