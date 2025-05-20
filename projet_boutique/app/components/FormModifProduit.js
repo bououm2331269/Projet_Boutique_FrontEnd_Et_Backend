@@ -1,8 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useUser } from "./userContext";
 
 export default function FormModifProduit({ id }) {
   const [categories, setCategories] = useState([]);
+  const { user } = useUser();
   const [product, setProduct] = useState({
     nom: "",
     description: "",
@@ -13,20 +15,28 @@ export default function FormModifProduit({ id }) {
   });
 
   useEffect(() => {
-    // Charger les catégories
+
+    if (!user || !user.token) return;
+
     fetch("https://projet-prog4e06.cegepjonquiere.ca/api/Categories")
       .then((res) => res.json())
       .then((data) => setCategories(data));
 
     // Charger le produit
     async function chargerProduit() {
-      const res = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Produits/${id}`);
+      const res = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Produits/admin/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${user.token}`
+        },
+      });
       const data = await res.json();
       setProduct(data);
     }
 
     chargerProduit();
-  }, [id]);
+  }, [user, id]);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -49,6 +59,7 @@ export default function FormModifProduit({ id }) {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${user.token}`
       },
       body: JSON.stringify(updatedProduct),
     });

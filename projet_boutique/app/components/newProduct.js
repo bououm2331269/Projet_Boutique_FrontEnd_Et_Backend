@@ -3,17 +3,26 @@
 import { useEffect, useState, useContext } from "react";
 import { CartContext } from "@/app/components/panier";
 import { useRouter } from "next/navigation";
+import { useUser } from "./userContext";
 
 export default function ProductAjoute({ id }) {
     const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState(true);
+    const { user } = useUser();
 
     const { addToCart } = useContext(CartContext); // Récupérez la méthode addToCart
     const router = useRouter();
 
     async function fetchProduct() {
         try {
-            const response = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Produits/${id}`);
+            const response = await fetch(`https://localhost:7173/api/Produits/admin/${id}`,
+            {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${user.token}`
+                },
+            });
             if (!response.ok) {
                 throw new Error("Erreur lors du chargement du fichier JSON");
             }
@@ -27,6 +36,7 @@ export default function ProductAjoute({ id }) {
     }
 
     useEffect(() => {
+        if (!user || !user.token) return;
         fetchProduct();
     }, []);
 

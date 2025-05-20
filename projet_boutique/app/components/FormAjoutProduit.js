@@ -1,17 +1,19 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useUser } from "./userContext";
 
 export default function FormAjoutProduit() {
   const [categories, setCategories] = useState([]);
   const router = useRouter();
+  const { user } = useUser();
 
 
   useEffect(() => {
     fetch("https://projet-prog4e06.cegepjonquiere.ca/api/Categories")
       .then((res) => res.json())
       .then((data) => setCategories(data));
-  }, []);
+  }, [user]);
 
   async function ajouterProduit(event) {
     event.preventDefault(); 
@@ -44,6 +46,7 @@ export default function FormAjoutProduit() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${user.token}`
       },
       body: JSON.stringify({
         nom: nomProduit,

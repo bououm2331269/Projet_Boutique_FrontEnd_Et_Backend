@@ -411,7 +411,8 @@
       "id ": 10,
       "nom": "Composants PC",
       "image": "https://c8.alamy.com/compfr/2bkwx7p/pc-ordinateur-composants-materiel-electronique-collage-cpu-micro-processeur-carte-graphique-alimentation-ddr-ram-casque-vr-lunettes-solid-state-ssd-hard-dr-2bkwx7p.jpg",
-      "description": "Cartes graphiques, processeurs, RAM, et autres composants internes."
+      "description": "Cartes graphiques, processeurs, RAM, et autres composants internes.",
+      "id": "e6bf"
     }
   ],
   "users": [
@@ -707,6 +708,16 @@
       "id": "0006",
       "userId": "fd90",
       "dateCommande": "2025-05-18T04:26:20.169Z"
+    },
+    {
+      "id": "7f22",
+      "userId": "99ed2359-6cfe-4985-92be-2743e544c0da",
+      "dateCommande": "2025-05-19T23:55:52.437Z"
+    },
+    {
+      "id": "81b3",
+      "userId": "99ed2359-6cfe-4985-92be-2743e544c0da",
+      "dateCommande": "2025-05-20T00:21:29.505Z"
     }
   ],
   "commandesProduits": [
@@ -1021,6 +1032,24 @@
       "commandeId": "0006",
       "produitId": "4",
       "quantite": 4
+    },
+    {
+      "id": "a54c",
+      "commandeId": "7f22",
+      "produitId": 3,
+      "quantite": 3
+    },
+    {
+      "id": "65f2",
+      "commandeId": "7f22",
+      "produitId": 11,
+      "quantite": 5
+    },
+    {
+      "id": "47a7",
+      "commandeId": "81b3",
+      "produitId": 11,
+      "quantite": 5
     }
   ]
 }

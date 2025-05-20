@@ -70,9 +70,6 @@ export default function ProductDetails({ id }) {
 
                     <div className="mb-4">
                         <span className="h4 text-success">{product.prix} $</span>
-                        <p className="text-muted">
-                            <strong>Quantité en stock :</strong> {product.quantiteStock}
-                        </p>
                     </div>
 
                     <button

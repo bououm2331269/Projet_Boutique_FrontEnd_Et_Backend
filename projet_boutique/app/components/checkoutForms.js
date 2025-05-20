@@ -11,7 +11,6 @@ export default function CheckoutForm({amount}) {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { clearCart } = useContext(CartContext); // Utilisation du contexte();
   const { user } = useUser(); 
 
   console.log("Montant envoyé au backend:", amount);
@@ -89,7 +88,7 @@ export default function CheckoutForm({amount}) {
         setError(result.error.message);
       } else if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
         setSuccess(true);
-       // Vider le panier après un paiement réussi
+        localStorage.removeItem('cart');// Vider le panier après un paiement réussi
       }
     } catch (err) {
       console.error("Erreur lors de la soumission :", err);

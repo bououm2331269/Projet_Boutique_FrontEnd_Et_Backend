@@ -4,42 +4,59 @@ import { CartContext } from "./panier";
 import { useUser } from "./userContext";
 
 export default function ChargerPanier() {
-  const { setCartItems } = useContext(CartContext); // Fonction pour mettre à jour le panier
-  const { user } = useUser(); // Récupérer les informations utilisateur
+  const { setCartItems } = useContext(CartContext);
+  const { user } = useUser();
 
   useEffect(() => {
     const fetchCartForUser = async () => {
-      if (!user || !user.id) return;
+      console.log("Utilisateur :", user);
+
+      // Vérifiez si l'utilisateur est connecté, s'il est un client et s'il dispose des informations nécessaires
+      if (!user || !user.id || !user.token || user.role !== "Client") {
+        console.warn("Utilisateur non autorisé, nouveau ou informations manquantes.");
+        return;
+      }
 
       try {
-        // Récupérer le panier de l'utilisateur
-        const response = await fetch(`http://localhost:3000/paniers?userId=${user.id}`);
-        if (!response.ok) throw new Error("Erreur lors de la récupération du panier.");
-        const data = await response.json();
-
-        // Trouvez le panier correspondant au userId
-        const userCart = data.find((panier) => panier.userId === user.id);
-        if (!userCart) {
-          console.log("Aucun panier trouvé pour cet utilisateur.");
-          return;
-        }
-
-        // Récupérer les détails complets des produits
-        const detailedProducts = await Promise.all(
-          userCart.produits.map(async (produit) => {
-            const produitResponse = await fetch(`http://localhost:3000/produits/${produit.id}`);
-            if (!produitResponse.ok) throw new Error(`Erreur lors de la récupération du produit ID ${produit.id}.`);
-            const produitDetails = await produitResponse.json();
-
-            // Combinez les détails du produit avec la quantité du panier
-            return {
-              ...produitDetails,
-              quantity: produit.quantite,
-            };
-          })
+        const response = await fetch(
+          `https://projet-prog4e06.cegepjonquiere.ca/api/paniers/user/${user.id}/current`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
         );
 
-        // Mettez à jour les éléments du panier dans le contexte
+        console.log("Réponse brute :", response);
+
+        // Gérer les réponses non valides ou 404
+        if (response.status === 404) {
+          console.warn("Aucun panier trouvé pour cet utilisateur.");
+          return setCartItems([]); // Panier vide pour un nouvel utilisateur
+        }
+
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP : ${response.status}`);
+        }
+
+        const panierData = await response.json();
+        console.log("Données du panier :", panierData);
+
+        // Vérifiez et traitez les données du panier
+        if (!panierData || !panierData.produits || panierData.produits.length === 0) {
+          console.warn("Aucun produit trouvé dans le panier.");
+          return setCartItems([]);
+        }
+
+        const detailedProducts = panierData.produits.map((p) => ({
+          id: p.id,
+          nom: p.nom,
+          description: p.description,
+          prix: p.prix,
+          image: p.image,
+          quantity: p.quantite,
+        }));
+
         setCartItems(detailedProducts);
       } catch (error) {
         console.error("Erreur lors du chargement du panier :", error);
@@ -49,5 +66,5 @@ export default function ChargerPanier() {
     fetchCartForUser();
   }, [user, setCartItems]);
 
-  return null; // Ce composant ne rend rien, il agit uniquement en arrière-plan
+  return null;
 }

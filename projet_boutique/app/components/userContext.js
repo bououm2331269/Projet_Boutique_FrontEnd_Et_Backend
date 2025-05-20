@@ -20,6 +20,7 @@ export default function UserProvider({ children }) {
   const loginUser = (userData) => {
     setUser(userData); // Mettre à jour l'état utilisateur
     localStorage.setItem("user", JSON.stringify(userData)); // Persist les données
+    console.log("Utilisateur connecté :", userData);
   };
 
   const logoutUser = () => {
