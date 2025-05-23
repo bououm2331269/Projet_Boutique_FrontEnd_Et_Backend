@@ -24,9 +24,6 @@ export default function Carousel() {
         fetchProduits();
     }, []);
 
-    /*if (loading) {
-        return <div>Chargement en cours...</div>;
-    }*/
 
     if (produits.length === 0) {
         return <div>Aucun produit disponible.</div>;
@@ -60,8 +57,8 @@ export default function Carousel() {
                                 className="d-block w-100 rounded"
                                 alt={produit.nom}
                                 style={{
-                                    maxHeight: "1000px", 
-                                    objectFit: "cover", 
+                                    maxHeight: "1000px", // Limite la hauteur maximale
+                                    objectFit: "cover", // Empêche le recadrage de l'image
                                     width: "auto", 
                                 }}
                               

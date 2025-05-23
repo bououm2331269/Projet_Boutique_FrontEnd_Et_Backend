@@ -2,9 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { FaKey, FaEnvelope, FaUser } from "react-icons/fa";
+import { FaKey, FaUser, FaEnvelope } from "react-icons/fa";
 import { useUser } from "./userContext";
 import {userProvider} from "./userContext";
+import jwt from "jsonwebtoken";
 
 
 
@@ -12,30 +13,31 @@ import {userProvider} from "./userContext";
 
 export default function Connexion() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const { loginUser } = useUser();
 
-  const handleEmailChange = (e) => setEmail(e.target.value);
-  const handlePasswordChange = (e) => setPassword(e.target.value);
   const handleUsernameChange = (e) => setUsername(e.target.value);
+  const handlePasswordChange = (e) => setPassword(e.target.value);
+  const handleEmailChange = (e) => setEmail(e.target.value);
 
   async function handleSubmit(e) {
     e.preventDefault();
   
-    if (!email || !password) {
+    if (!username || !password) {
       setError("Veuillez remplir tous les champs obligatoires.");
       return;
     }
+
   
     try {
-      const response = await fetch("https://localhost:7173/api/Accounts/login", {
+      const response = await fetch("https://projet-prog4e06.cegepjonquiere.ca/api/Accounts/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email,username, password }),
+        body: JSON.stringify({ username,email, password }),
       });
   
       const data = await response.json();
@@ -44,17 +46,26 @@ export default function Connexion() {
         throw new Error(data.message || "Erreur lors de la connexion.");
       }
   
+      setSuccess("Connexion reussie!");
+      const token = data.token; 
+      const userId = data.userId;
+  
+      const decodedToken = jwt.decode(token); 
+      console.log("Decoded Token:", decodedToken);
+  
       const userData = {
-        id: data.UserId,
-        token: data.Token,
+        id: userId, 
+        role: decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"],
+        token,
       };
   
-      console.log("User data:", userData);
-  
-      localStorage.setItem("user", JSON.stringify(userData)); // Stocke les données utilisateur
-      loginUser(userData); // Mettre à jour le contexte utilisateur
-  
-      router.push("/"); // Redirige vers la page principale
+      loginUser(userData); 
+
+    if (userData.role === "Administrateur") {
+      router.push("/pageAdmin"); 
+    } else {
+      router.push("/acceuil"); 
+    }
     } catch (err) {
       setError(err.message);
     }
@@ -80,19 +91,17 @@ export default function Connexion() {
 
                     <form onSubmit={handleSubmit}>
                       <div className=" mb-4 d-flex align-items-center">
-                        <FaEnvelope className="me-3 fs-4"/>
-                          <input type="email" id="email" className="form-control" value={email} onChange={handleEmailChange} required placeholder="Email" />
+                        <FaUser className="me-3 fs-4"/>
+                          <input type="text" id="username" className="form-control" value={username} onChange={handleUsernameChange} required placeholder="Username" />
                         </div>
-                     
+                        <div className=" mb-4 d-flex align-items-center">
+                      <FaEnvelope className="me-3 fs-4"/>
+                          <input type="email" id="email" className="form-control" value={email} onChange={handleEmailChange} placeholder="Email" required/>
+                      </div>
 
                       <div className=" mb-4 d-flex align-items-center">
                       <FaKey className="me-3 fs-4"/>
                           <input type="password" id="password" className="form-control" value={password} onChange={handlePasswordChange} placeholder="Password" required/>
-                      </div>
-                      
-                      <div className=" mb-4 d-flex align-items-center">
-                      <FaUser className="me-3 fs-4"/>
-                          <input type="text" id="username" className="form-control" value={username} onChange={handleUsernameChange} placeholder="Username" required/>
                       </div>
 
                       <div className="row mb-4">

@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   try {
     const body = await req.json();
-    const { email, password } = body;
+    const { username, password } = body;
 
-    if (!email || !password) {
+    if (!username || !password) {
       return NextResponse.json(
         { message: "Email et mot de passe sont obligatoires." },
         { status: 400 }
@@ -13,7 +13,7 @@ export async function POST(req) {
     }
 
     // Appel à l'API pour récupérer les utilisateurs
-    const response = await fetch(`http://localhost:3000/users?email=${email}`, {
+    const response = await fetch(`http://localhost:3000/users?username=${username}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -28,7 +28,7 @@ export async function POST(req) {
     }
 
     const users = await response.json();
-    const user = users.find((u) => u.email === email);
+    const user = users.find((u) => u.username === username);
 
     if (!user) {
       return NextResponse.json(
@@ -46,7 +46,7 @@ export async function POST(req) {
     }
 
     // Simuler la génération d'un token (remplacez par une implémentation JWT réelle)
-    const token = `fake-token-for-${email}`;
+    const token = `fake-token-for-${username}`;
 
     // Retourner les détails utilisateur avec le token
     return NextResponse.json(
@@ -57,6 +57,7 @@ export async function POST(req) {
           id: user.id,
           name: user.name,
           email: user.email,
+          role: user.role,
         },
       },
       { status: 200 }

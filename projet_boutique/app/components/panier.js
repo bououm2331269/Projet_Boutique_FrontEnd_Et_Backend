@@ -2,79 +2,157 @@
 import { useState, createContext, useContext, useEffect } from "react";
 import { useUser } from "./userContext";
 import { useRouter } from "next/navigation";
+import set from "localbase/localbase/api/actions/set";
 
 // Contexte pour le panier
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
-
-  useEffect(() => {
-    const savedCart = JSON.stringify(cartItems);
-    if (localStorage.getItem("cart") !== savedCart) {
-      localStorage.setItem("cart", savedCart);
-    }
-  }, [cartItems]);
+  const { user } = useUser();
   
+  const router = useRouter();
 
-  const addToCart = (product) => {
-    setCartItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.id === product.id);
-      if (existingItem) {
-        return prevItems.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-        );
+  // Charger le panier depuis le localStorage au montage
+  useEffect(() => {
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) {
+      setCartItems(JSON.parse(savedCart));
+    }
+  }, []);
+
+  // Sauvegarder le panier dans le localStorage à chaque modification
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  const addToCart = async (product) => {
+    if (!user || !user.token) {
+      alert("Veuillez vous connecter pour ajouter un produit au panier.");
+      router.push("/connexion");
+      return;
+    }
+
+    try {
+      const res = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Paniers/user/${user.id}/produits`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${user.token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          produitId: product.id,
+          quantite: 1,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Erreur lors de l'ajout au panier.");
       }
-      return [...prevItems, { ...product, quantity: 1 }];
-    });
+
+      // Mise à jour du panier local
+      setCartItems((prev) => {
+        const existingItem = prev.find((item) => item.id === product.id);
+        if (existingItem) {
+          return prev.map((item) =>
+            item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+          );
+        }
+        return [...prev, { ...product, quantity: 1 }];
+      });
+    } catch (error) {
+      console.error("Erreur lors de l'ajout au panier :", error.message);
+    }
   };
-
-  const removeFromCart = (id) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
-  };
-
-  const clearCart = () => {
-    console.log("clearCart est appelé");
-    setCartItems([]);
-  };
-
-  let isUpdating = false;
-
-  const updateQuantity = async (id, quantity) => {
-    if (isUpdating) return;
-    isUpdating = true;
+  const removeFromCart = async (productId) => {
+    if (!user || !user.token) return;
   
     try {
-      const response = await fetch(`http://localhost:3000/produits/${id}`);
-      if (!response.ok) throw new Error("Erreur lors de la récupération des données.");
-      const product = await response.json();
+      // Appel à l'API pour supprimer le produit du panier
+      const response = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Paniers/user/${user.id}/delete/${productId}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${user.token}`,
+          "Content-Type": "application/json",
+        },
+      });
   
-      if (!product) {
-        alert("Produit non trouvé dans les données stockées.");
-        return;
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Erreur lors de la suppression du produit.");
       }
   
-      setCartItems((prevItems) =>
-        prevItems.map((item) => {
-          if (item.id === id) {
-            if (quantity > product.quantiteStock) {
-              alert(`La quantité maximale en stock pour ${product.nom} est ${product.quantiteStock}.`);
-              return { ...item, quantity: product.quantiteStock };
-            }
-            return { ...item, quantity: Math.max(quantity, 1) };
-          }
-          return item;
-        })
-      );
+      // Mise à jour locale : retirer le produit du panier
+      setCartItems((prev) => prev.filter((item) => item.id !== productId));
+      console.log("Produit supprimé du panier avec succès.");
     } catch (error) {
-      console.error("Erreur lors de la récupération des quantités :", error);
-      alert("Une erreur est survenue lors de la vérification des stocks.");
-    } finally {
-      isUpdating = false;
+      console.error("Erreur lors de la suppression du produit :", error.message);
+      alert(error.message); // Optionnel : afficher une alerte à l'utilisateur
     }
   };
   
 
+  const clearCart = async () => {
+    if (!user || !user.token) return;
+
+    try {
+      const response = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Paniers/user/${user.id}/clear`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${user.token}`,
+        },
+      });
+
+      if (!response.ok) throw new Error("Erreur lors du vidage du panier.");
+
+      setCartItems([]);
+      localStorage.removeItem("cart");
+    } catch (error) {
+      console.error("Erreur lors du vidage du panier :", error.message);
+    }
+  };
+
+  const updateQuantity = async (productId, quantity) => {
+    if (quantity < 1) {
+      removeFromCart(productId);
+      return;
+    }
+  
+    console.log("Produit ID :", productId);
+    console.log("Quantité demandée :", quantity);
+    console.log("Utilisateur ID :", user.id);
+  
+    try {
+      // Appel à l'API
+      const response = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Paniers/user/${user.id}/produits/${productId}`, {
+        method: "PUT",
+        headers: {
+          "Authorization": `Bearer ${user.token}`, 
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ quantite: quantity }),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log("Message d'erreur :", errorData.message || "Erreur inconnue.");
+        alert(errorData.message || "Erreur lors de la mise à jour de la quantité.");
+        return; // Empêche la mise à jour de l'état local en cas d'erreur
+      }
+  
+      // Mettre à jour l'état local après la réussite de l'API
+      setCartItems((prev) =>
+        prev.map((item) =>
+          item.id === productId ? { ...item, quantity } : item
+        )
+      );
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour de la quantité :", error.message);
+      alert(error.message); 
+    }
+  };
+  
+  
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
   const totalPrice = cartItems.reduce((total, item) => total + item.prix * item.quantity, 0);
 
@@ -84,7 +162,8 @@ export const CartProvider = ({ children }) => {
         cartItems,
         addToCart,
         removeFromCart,
-        clearCart,
+        setCartItems,
+       // clearCart,
         updateQuantity,
         cartCount,
         totalPrice,
@@ -100,63 +179,64 @@ export const CartComponent = () => {
     cartItems,
     removeFromCart,
     updateQuantity,
-    clearCart,
+   // clearCart,
     totalPrice,
   } = useContext(CartContext);
   const { user } = useUser(); // Récupérer les informations utilisateur
  const router = useRouter();
-  const handleCheckout = async () => {
-    if (!user || !user.id) {
-      alert("Veuillez vous connecter pour passer une commande.");
-      router.push("/connexion");
-      return;
+ const handleCheckout = async () => {
+  if (!user || !user.id) {
+    alert("Veuillez vous connecter pour passer une commande.");
+    router.push("/connexion");
+    return;
+  }
+
+  try {
+    const dateCommande = new Date().toISOString();
+
+    // Construire les données à envoyer
+    const commande = {
+      userId: user.id,
+      dateCommande,
+    };
+
+    const commandesProduits = cartItems.map((item) => ({
+      produitId: item.id,
+      quantite: item.quantity,
+    }));
+
+    // Appeler l'API pour créer une commande
+    const response = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/Commandes/user/${user.id}`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${user.token}`, // Inclure le token si nécessaire
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        commande,
+        commandesProduits,
+      }),
+    });
+
+    // Vérification de la réponse
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Erreur lors de l'enregistrement de la commande.");
     }
 
-    try {
-      //const commandeId = `${Date.now()}`;
-      const dateCommande = new Date().toISOString();
+    const result = await response.json();
+    console.log("Commande créée :", result);
 
-      // Construire la commande principale
-      const commande = {
-        //id: commandeId,
-        userId: user.id, // Remplacez par l'ID utilisateur approprié
-        dateCommande,
-      };
+    // **Vider le panier localStorage 
+    localStorage.removeItem("cart");
 
-      // Construire les produits associés à la commande
-      const commandesProduits = cartItems.map((item, index) => ({ 
-        produitId: item.id,
-        quantite: item.quantity,
-      }));
+    router.push("/paiement");
+  } catch (error) {
+    console.error("Erreur lors du paiement :", error.message);
+    alert(error.message || "Une erreur est survenue lors du traitement de la commande.");
+  }
+};
 
-      // Envoyer les données au serveur pour mise à jour JSON
-      const response = await fetch("/api/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          commande,
-          commandesProduits,
-          userId: user.id,
-        }),
-
-      });
-      
-      console.log(await response.json()); 
-      if (!response.ok) {
-        throw new Error("Erreur lors de l'enregistrement des commandes.");
-      }
-
-     
-      alert("Commande enregistrée avec succès !");
-      router.push("/paiement")
-
-    } catch (error) {
-      console.error("Erreur lors du paiement :", error.message);
-      alert("Une erreur est survenue lors du traitement de la commande.");
-    }
-  };
 
   return (
     <div className="container my-5">
@@ -207,3 +287,28 @@ export const CartComponent = () => {
     </div>
   );
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

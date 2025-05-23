@@ -5,18 +5,18 @@
       "nom": "iPhone 14",
       "description": "Smartphone Apple avec écran Super Retina XDR et puce A15 Bionic.",
       "image": "https://cdn.pixabay.com/photo/2022/09/25/22/25/iphones-7479304_1280.jpg",
-      "quantiteStock": 5,
-      "categorieProduitId": 1,
-      "prix": 999
+      "quantiteStock": 10,
+      "prix": 999,
+      "categorieProduitId": 1
     },
     {
       "id": "2",
       "nom": "Samsung Galaxy S23",
       "description": "Smartphone haut de gamme avec triple capteur photo et écran AMOLED.",
       "image": "https://cdn.pixabay.com/photo/2019/12/27/01/46/samsung-4721542_1280.jpg",
-      "quantiteStock": 8,
-      "categorieProduitId": 1,
-      "prix": 899
+      "quantiteStock": 12,
+      "prix": 899,
+      "categorieProduitId": 1
     },
     {
       "id": "3",
@@ -323,6 +323,33 @@
       "quantiteStock": "10",
       "categorieProduitId": "1",
       "prix": 500
+    },
+    {
+      "id": "260c",
+      "nom": "Iphone 15",
+      "description": "Smartphone Apple avec écran Super Retina XDR et puce A15 Bionic.",
+      "image": "https://th.bing.com/th/id/OIP.-22fs7W_R-MVukHjyGOq1AHaEx?cb=iwc2&rs=1&pid=ImgDetMain",
+      "quantiteStock": 20,
+      "categorieProduitId": 1,
+      "prix": 1000
+    },
+    {
+      "id": "4ab1",
+      "nom": "Iphone 15",
+      "description": "Smartphone Apple avec écran Super Retina XDR et puce A15 Bionic.",
+      "image": "https://th.bing.com/th/id/OIP.-22fs7W_R-MVukHjyGOq1AHaEx?cb=iwc2&rs=1&pid=ImgDetMain",
+      "quantiteStock": 21,
+      "categorieProduitId": "1",
+      "prix": 1000
+    },
+    {
+      "id": "7115",
+      "nom": "Iphone 15",
+      "description": "Smartphone Apple avec écran Super Retina XDR et puce A15 Bionic.",
+      "image": "https://th.bing.com/th/id/OIP.-22fs7W_R-MVukHjyGOq1AHaEx?cb=iwc2&rs=1&pid=ImgDetMain",
+      "quantiteStock": 21,
+      "categorieProduitId": "1",
+      "prix": 1000
     }
   ],
   "categories": [
@@ -385,20 +412,10 @@
       "nom": "Composants PC",
       "image": "https://c8.alamy.com/compfr/2bkwx7p/pc-ordinateur-composants-materiel-electronique-collage-cpu-micro-processeur-carte-graphique-alimentation-ddr-ram-casque-vr-lunettes-solid-state-ssd-hard-dr-2bkwx7p.jpg",
       "description": "Cartes graphiques, processeurs, RAM, et autres composants internes.",
-      "id": "999d"
+      "id": "e6bf"
     }
   ],
   "users": [
-    {
-      "id": "e7d7",
-      "username": "ouma",
-      "email": "oumaimathboukari@gmail.com",
-      "phoneNumber": "5814470405",
-      "prenom": "prenom",
-      "adresse": "G7X 3P3",
-      "password": "12345",
-      "role": "Administrateur"
-    },
     {
       "id": "e7d7",
       "username": "admin",
@@ -406,17 +423,17 @@
       "phoneNumber": "5814470405",
       "prenom": "prenom",
       "adresse": "G7X 3P3",
-      "password": "12345",
+      "password": "Admin123",
       "role": "Administrateur"
     },
     {
-      "id": "e7d8",
-      "username": "ouma",
-      "email": "oumaimathboukari@gmail.com",
+      "id": "fd90",
+      "username": "linop",
+      "email": "lia@gmail.com",
       "phoneNumber": "5814470405",
-      "prenom": "prenom",
-      "adresse": "G7X 3P3",
-      "password": "12345",
+      "prenom": "lia",
+      "adresse": "utilisateur",
+      "password": "123",
       "role": "Client"
     }
   ],
@@ -426,12 +443,12 @@
       "userId": "e7d7",
       "produits": [
         {
-          "id": "1",
-          "quantite": 2
+          "id": "2",
+          "quantite": 7
         },
         {
-          "id": "2",
-          "quantite": 1
+          "id": "4",
+          "quantite": 4
         }
       ]
     }
@@ -518,9 +535,189 @@
       "dateCommande": "2025-05-13T03:46:08.970Z"
     },
     {
-      "id": "a1c7",
-      "userId": "e7d7",
-      "dateCommande": "2025-05-15T14:08:09.046Z"
+      "id": "9de2",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-16T04:37:22.575Z"
+    },
+    {
+      "id": "52ff",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-16T04:41:30.384Z"
+    },
+    {
+      "id": "e929",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-16T04:46:45.235Z"
+    },
+    {
+      "id": "9259",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T03:23:51.838Z"
+    },
+    {
+      "id": "b386",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T04:52:18.370Z"
+    },
+    {
+      "id": "d63c",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T04:55:35.177Z"
+    },
+    {
+      "id": "754d",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T04:56:23.790Z"
+    },
+    {
+      "id": "de13",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T05:02:39.698Z"
+    },
+    {
+      "id": "59f8",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T05:03:49.734Z"
+    },
+    {
+      "id": "6190",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T05:08:36.467Z"
+    },
+    {
+      "id": "6632",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T05:09:36.487Z"
+    },
+    {
+      "id": "bdb2",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T05:12:24.065Z"
+    },
+    {
+      "id": "3b3d",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T05:15:03.993Z"
+    },
+    {
+      "id": "996e",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T05:17:17.232Z"
+    },
+    {
+      "id": "84b0",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T05:18:59.237Z"
+    },
+    {
+      "id": "22e8",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T05:24:13.146Z"
+    },
+    {
+      "id": "ddac",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T05:29:02.557Z"
+    },
+    {
+      "id": "d310",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T05:31:11.986Z"
+    },
+    {
+      "id": "b9c8",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T05:32:36.214Z"
+    },
+    {
+      "id": "7f4c",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T05:33:09.964Z"
+    },
+    {
+      "id": "6805",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T05:34:01.672Z"
+    },
+    {
+      "id": "66b2",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T05:44:00.529Z"
+    },
+    {
+      "id": "3f5f",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T05:45:15.351Z"
+    },
+    {
+      "id": "787e",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T05:47:52.994Z"
+    },
+    {
+      "id": "4ced",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T05:52:44.858Z"
+    },
+    {
+      "id": "60ba",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T05:53:56.282Z"
+    },
+    {
+      "id": "de8c",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T05:57:31.953Z"
+    },
+    {
+      "id": "c7c8",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T06:01:26.081Z"
+    },
+    {
+      "id": "f29d",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T06:02:48.586Z"
+    },
+    {
+      "id": "89f2",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T15:41:36.197Z"
+    },
+    {
+      "id": "a03b",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T15:43:42.094Z"
+    },
+    {
+      "id": "04e4",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T15:54:07.641Z"
+    },
+    {
+      "id": "6d06",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T15:56:37.780Z"
+    },
+    {
+      "id": "c558",
+      "userId": "b2f6",
+      "dateCommande": "2025-05-17T16:44:16.642Z"
+    },
+    {
+      "id": "0006",
+      "userId": "fd90",
+      "dateCommande": "2025-05-18T04:26:20.169Z"
+    },
+    {
+      "id": "7f22",
+      "userId": "99ed2359-6cfe-4985-92be-2743e544c0da",
+      "dateCommande": "2025-05-19T23:55:52.437Z"
+    },
+    {
+      "id": "81b3",
+      "userId": "99ed2359-6cfe-4985-92be-2743e544c0da",
+      "dateCommande": "2025-05-20T00:21:29.505Z"
     }
   ],
   "commandesProduits": [
@@ -627,10 +824,232 @@
       "quantite": 1
     },
     {
-      "id": "ff60",
-      "commandeId": "1747318090148",
-      "produitId": "9",
+      "id": "f485",
+      "commandeId": "1747370243429",
+      "produitId": "3",
       "quantite": 1
+    },
+    {
+      "id": "e4c6",
+      "commandeId": "1747370490855",
+      "produitId": "3",
+      "quantite": 1
+    },
+    {
+      "id": "2d75",
+      "commandeId": "e929",
+      "produitId": "8",
+      "quantite": 1
+    },
+    {
+      "id": "6abe",
+      "commandeId": "9259",
+      "produitId": "11",
+      "quantite": 1
+    },
+    {
+      "id": "cb73",
+      "commandeId": "b386",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "ef5c",
+      "commandeId": "d63c",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "5a92",
+      "commandeId": "754d",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "8548",
+      "commandeId": "de13",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "7b15",
+      "commandeId": "59f8",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "afbe",
+      "commandeId": "6190",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "7082",
+      "commandeId": "6632",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "4dfe",
+      "commandeId": "bdb2",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "bcc5",
+      "commandeId": "3b3d",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "d84f",
+      "commandeId": "996e",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "9658",
+      "commandeId": "84b0",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "b316",
+      "commandeId": "22e8",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "13c6",
+      "commandeId": "ddac",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "5cfc",
+      "commandeId": "d310",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "fa5b",
+      "commandeId": "b9c8",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "bd75",
+      "commandeId": "7f4c",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "fddd",
+      "commandeId": "6805",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "2a33",
+      "commandeId": "66b2",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "abcc",
+      "commandeId": "3f5f",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "6c43",
+      "commandeId": "787e",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "f520",
+      "commandeId": "4ced",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "711b",
+      "commandeId": "60ba",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "4d2f",
+      "commandeId": "de8c",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "ad62",
+      "commandeId": "c7c8",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "bf34",
+      "commandeId": "f29d",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "2dc1",
+      "commandeId": "89f2",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "717b",
+      "commandeId": "a03b",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "8e49",
+      "commandeId": "04e4",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "e3f4",
+      "commandeId": "6d06",
+      "produitId": "4",
+      "quantite": 1
+    },
+    {
+      "id": "a055",
+      "commandeId": "c558",
+      "produitId": "4",
+      "quantite": 5
+    },
+    {
+      "id": "01f9",
+      "commandeId": "0006",
+      "produitId": "4",
+      "quantite": 4
+    },
+    {
+      "id": "a54c",
+      "commandeId": "7f22",
+      "produitId": 3,
+      "quantite": 3
+    },
+    {
+      "id": "65f2",
+      "commandeId": "7f22",
+      "produitId": 11,
+      "quantite": 5
+    },
+    {
+      "id": "47a7",
+      "commandeId": "81b3",
+      "produitId": 11,
+      "quantite": 5
     }
   ]
 }

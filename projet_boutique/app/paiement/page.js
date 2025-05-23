@@ -3,7 +3,9 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "@/app/components/checkoutForms";
 import { useContext } from "react";
-import { CartContext } from "@/app/components/panier";
+import { CartContext, CartProvider } from "@/app/components/panier";
+import { Car } from "lucide-react";
+import Header from "@/app/components/header";
 
 console.log("Stripe Public Key:", process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
@@ -13,7 +15,7 @@ if (process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY === undefined) {
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
 export default function CheckoutPage() {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems,clearCart } = useContext(CartContext);
 
   // Validate and calculate total amount
   const totalAmount = cartItems.reduce((total, item) => {
@@ -33,7 +35,11 @@ export default function CheckoutPage() {
     return <div>Votre panier est vide. Veuillez ajouter des articles avant de continuer.</div>;
   }
 
+
+
   return (
+    <>
+    <Header />
     <Elements
       stripe={stripePromise}
       options={{
@@ -43,6 +49,8 @@ export default function CheckoutPage() {
       }}
     >
       <CheckoutForm amount={amountInCents} />
+      
     </Elements>
+    </>
   );
 }

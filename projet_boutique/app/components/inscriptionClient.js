@@ -3,15 +3,14 @@ import { FaUser, FaIdBadge, FaEnvelope, FaPhone, FaMapMarkerAlt, FaLock, FaKey }
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function Inscription() {
+export default function InscriptionClient() {
   const [formData, setFormData] = useState({
     Username: "",
     Email: "",
-    PhoneNumber: "",
-    Prenom: "",
-    Adresse: "",
     Password: "",
     ConfirmPassword: "",
+    Prenom: "",
+    Adresse: "",
   });
 
   const [error, setError] = useState("");
@@ -26,35 +25,72 @@ export default function Inscription() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Validate form data
     if (
       !formData.Username ||
       !formData.Email ||
       !formData.Password ||
-      !formData.ConfirmPassword
+      !formData.ConfirmPassword ||
+      !formData.Prenom
     ) {
       setError("Veuillez remplir tous les champs obligatoires.");
       return;
     }
-
+  
     if (!/\S+@\S+\.\S+/.test(formData.Email)) {
       setError("L'adresse e-mail est invalide.");
       return;
     }
-
+  
+    if (formData.Username.length <= 4) {
+      setError("Le nom d'utilisateur doit comporter plus de 4 caractères.");
+      return;
+    }
+  
+    if (formData.Prenom.length <= 4) {
+      setError("Le prénom doit comporter plus de 4 caractères.");
+      return;
+    }
+  
     if (formData.Password !== formData.ConfirmPassword) {
       setError("Les mots de passe ne correspondent pas.");
       return;
     }
+  
+    if (
+      formData.Password.length <= 4 ||
+      !/[A-Z]/.test(formData.Password) ||
+      !/[!@#$%^&*(),.?":{}|<>/]/.test(formData.Password)
+    ) {
+      setError(
+        "Le mot de passe doit comporter plus de 4 caractères, inclure une majuscule et un caractère spécial."
+      );
+      return;
+    }
+     // Check if Username is available
+  try {
+    const usernameCheck = await fetch(
+      `https://projet-prog4e06.cegepjonquiere.ca/api/Accounts/check-username?username=${formData.Username}`
+    );
+    const isAvailable = await usernameCheck.json();
 
+    if (!isAvailable) {
+      setError("Ce nom d'utilisateur est déjà pris. Veuillez en choisir un autre.");
+      return;
+    }
+  } catch (err) {
+    setError("Une erreur est survenue lors de la vérification du nom d'utilisateur.");
+    return;
+  }
+  
     // Reset error state and show loading
     setError("");
     setLoading(true);
-
+  
     try {
       // Call your API
-      const response = await fetch("http://localhost:3000/users", {
+      const response = await fetch("https://projet-prog4e06.cegepjonquiere.ca/api/Accounts/register-client", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,18 +98,18 @@ export default function Inscription() {
         body: JSON.stringify({
           username: formData.Username,
           email: formData.Email,
+          password: formData.Password,
           phoneNumber: formData.PhoneNumber,
           prenom: formData.Prenom,
           adresse: formData.Adresse,
-          password: formData.Password,
         }),
       });
-
+  
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Une erreur est survenue.");
+        throw new Error(errorData.message);
       }
-
+  
       setSuccess("Inscription réussie !");
       setFormData({
         Username: "",
@@ -84,7 +120,7 @@ export default function Inscription() {
         Password: "",
         ConfirmPassword: "",
       });
-
+  
       setTimeout(() => {
         router.push("/connexion");
       }, 2000);
@@ -94,7 +130,7 @@ export default function Inscription() {
       setLoading(false);
     }
   };
-
+  
   return (
     <section id="inscription">
       <div className="container">
@@ -137,7 +173,7 @@ export default function Inscription() {
                       <div className="form-check d-flex justify-content-center mb-5">
                         <input className="form-check-input me-2" type="checkbox" id="terms" required />
                         <label className="form-check-label" htmlFor="terms">
-                          J'accepte les <a href="#!">conditions d'utilisation</a>
+                          J'accepte les <a href="/conditionUtilisation">conditions d'utilisation</a>
                         </label>
                       </div>
 
