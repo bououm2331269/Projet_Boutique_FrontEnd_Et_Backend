@@ -35,6 +35,8 @@ export default function CheckoutPage() {
     return <div>Votre panier est vide. Veuillez ajouter des articles avant de continuer.</div>;
   }
 
+
+
   return (
     <>
     <Header />

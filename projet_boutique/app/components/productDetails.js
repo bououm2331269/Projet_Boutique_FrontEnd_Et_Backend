@@ -8,7 +8,7 @@ export default function ProductDetails({ id }) {
     const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const { addToCart } = useContext(CartContext); // Récupérez la méthode addToCart
+    const { addToCart } = useContext(CartContext); 
     const router = useRouter();
 
     async function fetchProduct() {
@@ -44,11 +44,10 @@ export default function ProductDetails({ id }) {
             nom: product.nom,
             prix: product.prix,
             image: product.image,
-            quantity: 1, // Quantité par défaut à ajouter
+            quantity: 1, 
         });
-        alert(`${product.nom} a été ajouté au panier !`);
+       // alert(`${product.nom} a été ajouté au panier !`);
         
-        // Redirection vers la page panier
         router.push("/panier");
     };
 

@@ -67,7 +67,7 @@ export default function FormAjoutProduit() {
 
   return (
     <div className="container my-5">
-      <h1 className="text-center mb-4">Ajouter un Nouveau Produit</h1>
+      <h1 className="text-center mb-4 text-primary">Ajouter un Nouveau Produit</h1>
       <form onSubmit={ajouterProduit} className="p-4 border rounded shadow-sm bg-white">
         <div className="row mb-3">
           <div className="col-md-6">

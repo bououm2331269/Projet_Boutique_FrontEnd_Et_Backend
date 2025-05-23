@@ -39,22 +39,21 @@ export default function AcceuilAdmin() {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${user.token}`,
         },
-        body: JSON.stringify(produit), // Envoi du produit complet
+        body: JSON.stringify(produit), 
       });
   
       if (res.status === 204) {
-        // Pas de contenu dans la réponse
-        return produit; // Retourne l'objet produit modifié pour mettre à jour localement
+        return produit; 
       }
   
       if (!res.ok) {
-        const error = await res.text(); // Lit la réponse même si elle n'est pas JSON
+        const error = await res.text(); 
         console.error("Erreur serveur :", error);
         alert(`Erreur : ${error || "Erreur de mise à jour"}`);
         return null;
       }
   
-      return await res.json(); // Lit la réponse JSON si disponible
+      return await res.json(); 
     } catch (error) {
       console.error("Erreur lors de la requête :", error);
       alert("Une erreur inattendue est survenue.");
@@ -153,7 +152,6 @@ export default function AcceuilAdmin() {
       });
   
       if (res.status === 204) {
-        // Pas de contenu, suppression réussie
         return true;
       }
   
@@ -164,7 +162,7 @@ export default function AcceuilAdmin() {
         return false;
       }
   
-      return true; // Suppression réussie même avec une réponse différente
+      return true; 
     } catch (error) {
       console.error("Erreur lors de la suppression :", error);
       alert("Une erreur inattendue est survenue.");
@@ -177,7 +175,7 @@ export default function AcceuilAdmin() {
     <>
       <HeaderAdmin />
       <div className="container-fluid my-5">
-        <h1 className="text-center mb-5">Gestion des Produits</h1>
+        <h1 className="text-center mb-5 text-primary">Gestion des Produits</h1>
         <div className="row g-4">
           {produits.map((produit) => (
             <div key={produit.id} className="col-12 col-sm-6 col-md-4 col-lg-3">

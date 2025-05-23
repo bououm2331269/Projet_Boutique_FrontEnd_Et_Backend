@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { FaKey, FaUser } from "react-icons/fa";
+import { FaKey, FaUser, FaEnvelope } from "react-icons/fa";
 import { useUser } from "./userContext";
 import {userProvider} from "./userContext";
 import jwt from "jsonwebtoken";
@@ -47,29 +47,24 @@ export default function Connexion() {
       }
   
       setSuccess("Connexion reussie!");
-      const token = data.token; // Token renvoyé par l'API
+      const token = data.token; 
       const userId = data.userId;
   
       const decodedToken = jwt.decode(token); 
       console.log("Decoded Token:", decodedToken);
   
-      // Stocker les données utilisateur
       const userData = {
         id: userId, 
         role: decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"],
         token,
       };
   
-      console.log("User data:", userData);
-  
-     // localStorage.setItem("user", JSON.stringify(userData)); // Stocke les données utilisateur
-      loginUser(userData); // Mettre à jour le contexte utilisateur
-  
-      // Redirection basée sur le rôle
+      loginUser(userData); 
+
     if (userData.role === "Administrateur") {
-      router.push("/pageAdmin"); // Rediriger vers le tableau de bord admin
+      router.push("/pageAdmin"); 
     } else {
-      router.push("/acceuil"); // Rediriger vers la page d'accueil pour utilisateurs classiques
+      router.push("/acceuil"); 
     }
     } catch (err) {
       setError(err.message);
@@ -100,7 +95,7 @@ export default function Connexion() {
                           <input type="text" id="username" className="form-control" value={username} onChange={handleUsernameChange} required placeholder="Username" />
                         </div>
                         <div className=" mb-4 d-flex align-items-center">
-                      <FaKey className="me-3 fs-4"/>
+                      <FaEnvelope className="me-3 fs-4"/>
                           <input type="email" id="email" className="form-control" value={email} onChange={handleEmailChange} placeholder="Email" required/>
                       </div>
 

@@ -9,7 +9,6 @@ export default function ChargerPanier() {
 
   useEffect(() => {
     const fetchCartForUser = async () => {
-      console.log("Utilisateur :", user);
 
       // Vérifiez si l'utilisateur est connecté, s'il est un client et s'il dispose des informations nécessaires
       if (!user || !user.id || !user.token || user.role !== "Client") {
@@ -27,12 +26,9 @@ export default function ChargerPanier() {
           }
         );
 
-        console.log("Réponse brute :", response);
-
-        // Gérer les réponses non valides ou 404
         if (response.status === 404) {
           console.warn("Aucun panier trouvé pour cet utilisateur.");
-          return setCartItems([]); // Panier vide pour un nouvel utilisateur
+          return setCartItems([]); 
         }
 
         if (!response.ok) {
@@ -40,8 +36,7 @@ export default function ChargerPanier() {
         }
 
         const panierData = await response.json();
-        console.log("Données du panier :", panierData);
-
+       
         // Vérifiez et traitez les données du panier
         if (!panierData || !panierData.produits || panierData.produits.length === 0) {
           console.warn("Aucun produit trouvé dans le panier.");

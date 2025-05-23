@@ -10,7 +10,6 @@ export default function UserProvider({ children }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Vérifiez si un utilisateur est stocké dans localStorage au chargement
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));

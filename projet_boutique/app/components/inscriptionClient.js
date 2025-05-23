@@ -173,7 +173,7 @@ export default function InscriptionClient() {
                       <div className="form-check d-flex justify-content-center mb-5">
                         <input className="form-check-input me-2" type="checkbox" id="terms" required />
                         <label className="form-check-label" htmlFor="terms">
-                          J'accepte les <a href="#!">conditions d'utilisation</a>
+                          J'accepte les <a href="/conditionUtilisation">conditions d'utilisation</a>
                         </label>
                       </div>
 
