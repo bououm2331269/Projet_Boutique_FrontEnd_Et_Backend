@@ -103,7 +103,7 @@ export default function CheckoutForm({ amount }) {
       }
 
       console.log("Paiement enregistré avec succès !");
-      localStorage.removeItem("cart"); 
+     
     } catch (err) {
       console.error("Erreur lors de l'enregistrement :", err);
       setError("Une erreur est survenue lors de l'enregistrement du paiement.");
@@ -128,6 +128,7 @@ export default function CheckoutForm({ amount }) {
       if (result.error) {
         setError(result.error.message);
       } else if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
+        localStorage.removeItem("cart"); 
         setSuccess(true);
 
        

@@ -13,7 +13,7 @@ export default function AcceuilAdmin() {
   useEffect(() => {
     if (!user || !user.token) return;
 
-    fetch("https://localhost:7173/api/Produits/admin", {
+    fetch("https://projet-prog4e06.cegepjonquiere.ca/api/Produits/admin", {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${user.token}`,
@@ -33,7 +33,7 @@ export default function AcceuilAdmin() {
 
   const updateProduitBackend = async (produit) => {
     try {
-      const res = await fetch(`https://localhost:7173/api/Produits/${produit.id}`, {
+      const res = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Produits/${produit.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -144,7 +144,7 @@ export default function AcceuilAdmin() {
 
   const deleteProduitBackend = async (id) => {
     try {
-      const res = await fetch(`https://localhost:7173/api/Produits/${id}`, {
+      const res = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Produits/${id}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${user.token}`,
