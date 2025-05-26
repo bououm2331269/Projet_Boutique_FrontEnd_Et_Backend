@@ -16,7 +16,7 @@ export default function CheckoutForm({ amount }) {
   useEffect(() => {
     async function fetchLatestCommande() {
       try {
-        const response = await fetch("https://projet-prog4e06.cegepjonquiere.ca/api/Commandes", {
+        const response = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Commandes/user/${user.id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -103,7 +103,7 @@ export default function CheckoutForm({ amount }) {
       }
 
       console.log("Paiement enregistré avec succès !");
-      localStorage.removeItem("cart"); 
+     
     } catch (err) {
       console.error("Erreur lors de l'enregistrement :", err);
       setError("Une erreur est survenue lors de l'enregistrement du paiement.");
@@ -128,6 +128,7 @@ export default function CheckoutForm({ amount }) {
       if (result.error) {
         setError(result.error.message);
       } else if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
+        localStorage.removeItem("cart"); 
         setSuccess(true);
 
        

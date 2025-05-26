@@ -8,14 +8,12 @@ export default function ChargerPanier() {
   const { user } = useUser();
 
   useEffect(() => {
+    if (!user || !user.id || !user.token || user.role !== "Client") {
+      console.warn("Utilisateur non connecté ou non autorisé.");
+      return; 
+    }
+
     const fetchCartForUser = async () => {
-
-      // Vérifiez si l'utilisateur est connecté, s'il est un client et s'il dispose des informations nécessaires
-      if (!user || !user.id || !user.token || user.role !== "Client") {
-        console.warn("Utilisateur non autorisé, nouveau ou informations manquantes.");
-        return;
-      }
-
       try {
         const response = await fetch(
           `https://projet-prog4e06.cegepjonquiere.ca/api/paniers/user/${user.id}/current`,
@@ -28,7 +26,8 @@ export default function ChargerPanier() {
 
         if (response.status === 404) {
           console.warn("Aucun panier trouvé pour cet utilisateur.");
-          return setCartItems([]); 
+          setCartItems([]); 
+          return;
         }
 
         if (!response.ok) {
@@ -36,11 +35,11 @@ export default function ChargerPanier() {
         }
 
         const panierData = await response.json();
-       
-        // Vérifiez et traitez les données du panier
+
         if (!panierData || !panierData.produits || panierData.produits.length === 0) {
           console.warn("Aucun produit trouvé dans le panier.");
-          return setCartItems([]);
+          setCartItems([]); 
+          return;
         }
 
         const detailedProducts = panierData.produits.map((p) => ({
