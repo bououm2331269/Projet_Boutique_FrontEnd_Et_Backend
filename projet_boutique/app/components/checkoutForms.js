@@ -16,7 +16,7 @@ export default function CheckoutForm({ amount }) {
   useEffect(() => {
     async function fetchLatestCommande() {
       try {
-        const response = await fetch("https://projet-prog4e06.cegepjonquiere.ca/api/Commandes", {
+        const response = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Commandes/user/${user.id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

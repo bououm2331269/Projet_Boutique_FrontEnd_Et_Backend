@@ -1,9 +1,11 @@
 "use client";
 
 import React from "react";
-
+import HeaderDepart from "@/app/components/headerDepart";
 export default function PageCondition() {
   return (
+    <>
+    <HeaderDepart/>
     <div className="min-h-screen bg-light text-dark p-4">
       <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
         <h1 className="text-3xl font-bold text-primary mb-4">Conditions d'utilisation</h1>
@@ -69,5 +71,6 @@ export default function PageCondition() {
         </p>
       </div>
     </div>
+    </>
   );
 }

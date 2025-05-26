@@ -57,9 +57,13 @@ export default function FormAjoutProduit() {
         prix: prix,
       }),
     });
+    if(!response.ok) {
+      alert("Une erreur s'est produite lors de l'ajout du produit.");
+      return;
+    }
 
     const newProduit = await response.json();
-
+console.log(newProduit);
     alert("Produit ajouté avec succès !");
     router.push(`/produitAjoute/${newProduit.id}`);
     event.target.reset();

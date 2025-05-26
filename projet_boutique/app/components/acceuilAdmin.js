@@ -9,6 +9,7 @@ export default function AcceuilAdmin() {
   const [produits, setProduits] = useState([]);
   const router = useRouter();
   const { user } = useUser();
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     if (!user || !user.token) return;
@@ -29,7 +30,7 @@ export default function AcceuilAdmin() {
       })
       .then((data) => setProduits(data))
       .catch((err) => console.error("Erreur lors de la récupération :", err));
-  }, [user]);
+  }, [user, reload]);
 
   const updateProduitBackend = async (produit) => {
     try {
@@ -152,6 +153,7 @@ export default function AcceuilAdmin() {
       });
   
       if (res.status === 204) {
+        setReload((prev) => !prev);
         return true;
       }
   
@@ -175,55 +177,66 @@ export default function AcceuilAdmin() {
     <>
       <HeaderAdmin />
       <div className="container-fluid my-5">
-        <h1 className="text-center mb-5 text-primary">Gestion des Produits</h1>
-        <div className="row g-4">
-          {produits.map((produit) => (
-            <div key={produit.id} className="col-12 col-sm-6 col-md-4 col-lg-3">
-              <div className="card h-100 shadow-sm">
-                <img
-                  src={produit.image}
-                  className="card-img-top"
-                  alt={produit.nom}
-                  style={{ height: "200px", objectFit: "cover" }}
-                />
-                <div className="card-body d-flex flex-column">
-                  <h5 className="card-title text-truncate">{produit.nom}</h5>
-                  <p className="card-text text-muted flex-grow-1">
-                    {produit.description.length > 100
-                      ? produit.description.substring(0, 97) + "..."
-                      : produit.description}
-                  </p>
-                  <div className="d-flex justify-content-between align-items-center mb-3">
-                    <span className="fw-bold text-primary">${produit.prix.toFixed(2)}</span>
-                    <small className="text-secondary">Quantité : {produit.quantiteStock}</small>
-                  </div>
-                  <div className="d-flex gap-2">
-                    <button
-                      className="btn btn-sm btn-danger flex-fill"
-                      onClick={() => diminuerQuantite(produit.id)}
-                    >
-                      - Quantité
-                    </button>
-                    <button
-                      className="btn btn-sm btn-primary flex-fill"
-                      onClick={() => augmenterQuantite(produit.id)}
-                    >
-                      + Quantité
-                    </button>
-                    <button
-                      className="btn btn-sm btn-secondary flex-fill"
-                      onClick={() => router.push(`/pageModifProduit/${produit.id}`)}
-                    >
-                      Modifier
-                    </button>
-                  </div>
-                </div>
+  <h1 className="text-center mb-5 text-primary">Gestion des Produits</h1>
+  <div className="row g-4">
+    {produits.map((produit) => (
+      <div key={produit.id} className="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div className="card h-100 shadow-sm d-flex flex-column">
+          <img
+            src={produit.image}
+            className="card-img-top"
+            alt={produit.nom}
+            style={{ height: "200px", objectFit: "cover" }}
+          />
+          <div className="card-body d-flex flex-column">
+            <h5 className="card-title text-truncate">{produit.nom}</h5>
+            <p className="card-text text-muted flex-grow-1">
+              {produit.description.length > 100
+                ? produit.description.substring(0, 97) + "..."
+                : produit.description}
+            </p>
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <span className="fw-bold text-primary">${produit.prix.toFixed(2)}</span>
+              <small className="text-secondary">Quantité : {produit.quantiteStock}</small>
+            </div>
+            <div className="mt-auto">
+              <div className="d-flex gap-2">
+                <button
+                  className="btn btn-sm btn-danger flex-fill"
+                  onClick={() => diminuerQuantite(produit.id)}
+                >
+                  - Quantité
+                </button>
+                <button
+                  className="btn btn-sm btn-primary flex-fill"
+                  onClick={() => augmenterQuantite(produit.id)}
+                >
+                  + Quantité
+                </button>
+              </div>
+              <div className="d-flex gap-2 mt-2">
+                <button
+                  className="btn btn-sm btn-secondary flex-fill"
+                  onClick={() => router.push(`/pageModifProduit/${produit.id}`)}
+                >
+                  Modifier
+                </button>
+                <button
+                  className="btn btn-sm btn-warning flex-fill"
+                  onClick={() => deleteProduitBackend(produit.id)}
+                >
+                  Supprimer
+                </button>
               </div>
             </div>
-          ))}
-          {produits.length === 0 && <p className="text-center">Aucun produit trouvé.</p>}
+          </div>
         </div>
       </div>
+    ))}
+    {produits.length === 0 && <p className="text-center">Aucun produit trouvé.</p>}
+  </div>
+</div>
+
     </>
   );
 }

@@ -15,7 +15,7 @@ export default function ProductAjoute({ id }) {
 
     async function fetchProduct() {
         try {
-            const response = await fetch(`https://localhost:7173/api/Produits/admin/${id}`,
+            const response = await fetch(`https://projet-prog4e06.cegepjonquiere.ca/api/Produits/admin/${id}`,
             {
                 method: "GET",
                 headers: {
