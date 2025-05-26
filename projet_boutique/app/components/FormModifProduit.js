@@ -49,7 +49,7 @@ export default function FormModifProduit({ id }) {
       id: Number(id),
       nom: formData.get("nomProduit"),
       description: formData.get("description"),
-      image: formData.get("image"),
+      image: product.image,
       quantiteStock: Number(formData.get("quantite")),
       prix: Number(formData.get("prix")),
       categorieProduitId: Number(categorieId),
@@ -77,7 +77,7 @@ export default function FormModifProduit({ id }) {
       <div className="row mb-4">
         <div className="col-md-6 text-center">
           <img
-            src={product.image || "https://via.placeholder.com/300?text=Image+indisponible"}
+            src={product.imagePathe || "https://via.placeholder.com/300?text=Image+indisponible"}
             alt={product.nom}
             className="img-fluid rounded shadow-sm"
             style={{ maxHeight: "300px", objectFit: "contain" }}
@@ -134,19 +134,6 @@ export default function FormModifProduit({ id }) {
             className="form-control"
             style={{ height: "100px" }}
             defaultValue={product.description}
-          />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="image" className="form-label fw-bold text-primary">
-            URL de l'image
-          </label>
-          <input
-            type="text"
-            id="image"
-            name="image"
-            className="form-control"
-            defaultValue={product.image}
           />
         </div>
 

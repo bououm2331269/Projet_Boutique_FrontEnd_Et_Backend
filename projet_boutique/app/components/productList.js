@@ -16,6 +16,7 @@ export default function ProductCards() {
                 throw new Error("Erreur lors du chargement du fichier JSON");
             }
             const data = await response.json();
+            console.log(data);
             setProduits(data || []);
             setFilteredProduits(data || []); // Par défaut, tous les produits sont affichés
             setLoading(false);
@@ -70,7 +71,7 @@ export default function ProductCards() {
                         <div className="col" key={produit.id}>
                             <div className="card h-100 shadow-sm">
                                 <img
-                                    src={produit.image}
+                                    src={produit.imagePathe}
                                     className="card-img-top"
                                     alt={produit.nom}
                                     style={{ height: "200px", objectFit: "cover" }}

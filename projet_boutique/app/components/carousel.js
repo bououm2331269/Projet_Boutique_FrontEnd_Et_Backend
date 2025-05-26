@@ -53,7 +53,7 @@ export default function Carousel() {
                             className={`carousel-item ${index === 0 ? "active" : ""}`}
                         >
                             <img
-                                src={produit.image}
+                                src={produit.imagePathe}
                                 className="d-block w-100 rounded"
                                 alt={produit.nom}
                                 style={{
